@@ -1,4 +1,4 @@
-module github.com/Hrishikesh-Panigrahi/GoCRS
+module github.com/Hrishikesh-Panigrahi/GoCMS
 
 go 1.22.2
 
