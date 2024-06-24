@@ -26,7 +26,7 @@ func main() {
 	r := gin.Default()
 	r.MaxMultipartMemory = 1
 	print("Server is running on port 8080")
-
+	r.Static("/static", "./static")
 	// r.LoadHTMLFiles("./templates/index.html","./templates/Contact/failure.html")
 	// r.LoadHTMLFiles("./templates/index.html")
 	r.LoadHTMLGlob("templates/**/*")
@@ -61,8 +61,6 @@ func main() {
 			"name":    name,
 		})
 	})
-
-	r.Static("/static", "./static")
 
 	r.Run()
 }
