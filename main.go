@@ -27,7 +27,7 @@ func main() {
 	r.MaxMultipartMemory = 1
 	print("Server is running on port 8080")
 
-	// r.LoadHTMLFiles("./templates/index.html", "./templates/Contact/success.html", "./templates/Contact/failure.html")
+	// r.LoadHTMLFiles("./templates/index.html","./templates/Contact/failure.html")
 	// r.LoadHTMLFiles("./templates/index.html")
 	r.LoadHTMLGlob("templates/**/*")
 
