@@ -7,8 +7,8 @@ import (
 
 	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
 
+	"github.com/Hrishikesh-Panigrahi/GoCMS/controllers"
 	"github.com/gin-gonic/gin"
-	// "github.com/Hrishikesh-Panigrahi/GoCMS/controllers"
 )
 
 var print = fmt.Println
@@ -29,9 +29,7 @@ func main() {
 	// r.LoadHTMLFiles("./templates/index.html")
 	r.LoadHTMLGlob("templates/**/*")
 
-	r.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.html", gin.H{})
-	})
+	r.GET("/", controllers.GetPost)
 
 	r.POST("/contactus", func(c *gin.Context) {
 		c.Request.ParseForm()
