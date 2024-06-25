@@ -5,21 +5,19 @@ import (
 	"net/http"
 	"net/mail"
 
-	
+	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
+
 	"github.com/gin-gonic/gin"
-	"github.com/Hrishikesh-Panigrahi/GoCMS/Connections" // Add this line to import the package
 	// "github.com/Hrishikesh-Panigrahi/GoCMS/controllers"
 )
 
-
-
 var print = fmt.Println
-
 
 func init() {
 	connections.LoadEnvVariables()
-	connections.Connections()
-	
+	connections.Connection()
+	connections.SyncDB()
+
 }
 
 func main() {

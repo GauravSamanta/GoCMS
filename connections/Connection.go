@@ -9,7 +9,7 @@ import (
 
 var DB *gorm.DB
 
-func Connections() {
+func Connection() {
 	var err error
 	// refer https://github.com/go-sql-driver/mysql#dsn-data-source-name for details
 	dsn := os.Getenv("DB")
