@@ -79,9 +79,9 @@ func GetPost(c *gin.Context) {
 	post.Title = strings.ToUpper(post.Title)
 
 	post.Content = string(mdToHTML([]byte(post.Content)))
-	
+
 	c.HTML(http.StatusOK, "SinglePost.html", gin.H{
-		"Title": post.Title,
+		"Title":   post.Title,
 		"Content": template.HTML(post.Content),
 	})
 }
