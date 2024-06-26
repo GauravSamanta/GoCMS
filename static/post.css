@@ -1,0 +1,25 @@
+.blogPost {
+    font-family: "Roboto", sans-serif;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background: #1488cc;
+    background: -webkit-linear-gradient(to right, #2b32b2, #1488cc);
+    background: linear-gradient(to right, #2b32b2, #1488cc);
+}
+
+.blogPost .blog_post {
+    background: #fff;
+    max-width: 65%;
+    border-radius: 10px;
+    box-shadow: 1px 1px 2rem rgba(0, 0, 0, 0.3);
+    position: relative;
+    margin-bottom: 20px;
+    margin-top: 50px;
+}
+
+.blogPost .container_copy {
+    padding: 5rem 3rem 4rem 3rem;
+}
