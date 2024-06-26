@@ -17,6 +17,7 @@ type User struct {
 type Post struct {
     ID        uint           `json:"id" gorm:"primaryKey;autoIncrement"` // Standard field for the primary key
     Title     string         `json:"title" binding:"uppercase"`                              // A regular string field
+	Description string         `json:"description"`                            // A regular string field
     Content   string         `json:"content"`                            // A regular string field
     CreatedAt time.Time      `json:"created_at" time_format:"2006-01-02"` // Standard field for the creation time
     UpdatedAt time.Time      `json:"updated_at" time_format:"2006-01-02"` // Standard field for the update time

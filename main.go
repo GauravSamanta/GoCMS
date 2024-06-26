@@ -29,7 +29,8 @@ func main() {
 	// r.LoadHTMLFiles("./templates/index.html")
 	r.LoadHTMLGlob("templates/**/*")
 
-	r.GET("/", controllers.GetPost)
+	r.GET("/", controllers.GetPosts)
+	r.GET("/post/:id", controllers.GetPost)
 
 	r.POST("/contactus", func(c *gin.Context) {
 		c.Request.ParseForm()
