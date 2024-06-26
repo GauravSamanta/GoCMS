@@ -42,7 +42,10 @@ func GetPosts(c *gin.Context) {
 
 	result := connections.DB.Find(&posts)
 	if result.Error != nil {
-		return
+		c.HTML(http.StatusNotFound, "404.html", gin.H{
+			"Title": "404 Posts not found",
+			"error": "Posts not found",
+		})
 	}
 
 	for i := 0; i < len(posts); i++ {
@@ -66,16 +69,17 @@ func GetPost(c *gin.Context) {
 
 	result := connections.DB.First(&post, id)
 	if result.Error != nil {
-		return
+		c.HTML(http.StatusNotFound, "404.html", gin.H{
+			"Title": "404 Post not found",
+			"error": "Post not found",
+		})
 	}
 
 	post.FormattedDate = post.CreatedAt.Format("02 January 2006")
 	post.Title = strings.ToUpper(post.Title)
 
-	// convert the markdown in html
 	post.Content = string(mdToHTML([]byte(post.Content)))
 	
-
 	c.HTML(http.StatusOK, "SinglePost.html", gin.H{
 		"Title": post.Title,
 		"Content": template.HTML(post.Content),
