@@ -6,8 +6,8 @@ import (
 	"net/mail"
 
 	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
-
 	"github.com/Hrishikesh-Panigrahi/GoCMS/controllers"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -17,7 +17,6 @@ func init() {
 	connections.LoadEnvVariables()
 	connections.Connection()
 	connections.SyncDB()
-
 }
 
 func main() {
