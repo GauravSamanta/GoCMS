@@ -6,6 +6,8 @@ import (
 
 	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
 	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
+	views "github.com/Hrishikesh-Panigrahi/GoCMS/templates/index"
+	"github.com/a-h/templ"
 	"github.com/gomarkdown/markdown"
 	"github.com/gomarkdown/markdown/html"
 	"github.com/gomarkdown/markdown/parser"
@@ -37,6 +39,11 @@ func mdToHTML(md []byte) []byte {
 	return markdown.Render(doc, renderer)
 }
 
+func Render(c *gin.Context, status int, template templ.Component) error {
+	c.Status(status)
+	return template.Render(c.Request.Context(), c.Writer)
+}
+
 func GetPosts(c *gin.Context) {
 	var posts []models.Post
 
@@ -56,10 +63,7 @@ func GetPosts(c *gin.Context) {
 
 		}
 	}
-
-	c.HTML(http.StatusOK, "index.html", gin.H{
-		"posts": posts,
-	})
+	Render(c, http.StatusOK, views.Hello(posts))
 }
 
 func GetPost(c *gin.Context) {

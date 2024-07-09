@@ -7,7 +7,6 @@ import (
 
 	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
 	"github.com/Hrishikesh-Panigrahi/GoCMS/controllers"
-	"github.com/Hrishikesh-Panigrahi/GoCMS/templates/index"
 
 	"github.com/gin-gonic/gin"
 )
@@ -59,8 +58,7 @@ func main() {
 		})
 	})
 
-	component := index.Hello("Hrishikesh")
-	print(component)
+	
 
 	r.Run()
 }
