@@ -1,10 +1,22 @@
 package views
 
-import ("github.com/Hrishikesh-Panigrahi/GoCMS/models"
-		
+import (
+	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
+	views "github.com/Hrishikesh-Panigrahi/GoCMS/templates"
 )
 
-templ Hello(posts []models.Post) {
+templ Index(posts []models.Post) {
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<title>Form</title>
+			<link rel="stylesheet" href="/static/styles.css"/>
+			<script src="/static/js/htmx.min.js"></script>
+		</head>
+		<body>
+			@views.Nav()
 			<!-- Posts -->
 			for _, post:= range posts {
 				<div class="blog">
@@ -21,5 +33,6 @@ templ Hello(posts []models.Post) {
 					</div>
 				</div>
 			}
-		
+		</body>
+	</html>
 }

@@ -1,93 +1,95 @@
-/* 
 .contact-form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    flex-direction: column;
-    gap: 30px;
-    background: hsl(var(--background-secondary-light));
-  }
-  
-  .contact-form h2{
-      color: #fff;
-      font-size: 2em;
-  }
-  
-  .inputBox {
-    position: relative;
-    width: 400px;
-    margin-top: 5%;
-  }
-  
-  .inputBox .contact-form-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    background: hsl(var(--background-secondary-light));
-    border-radius: 5px;
-    outline: none;
-    color: #fff;
-    font-size: 1em;
-    transition: 0.5s;
-  }
-  
-  .inputBox span {
-    position: absolute;
-    left: 0;
-    padding: 10px;
-    pointer-events: none;
-    font-size: 1em;
-    color: rgba(255, 255, 255, 0.25);
-    text-transform: uppercase;
-    transition: 0.5s;
-  }
-  
-  .inputBox .contact-form-input:valid~span,
-  .inputBox .contact-form-input:focus~span {
-    color: white;
-    transform: translateX(10px) translateY(-7px);
-    font-size: 0.65em;
-    padding: 0 10px;
-    background: hsl(var(--background-secondary-light));
-    border-left: 1px solid hsl(var(--background-secondary-dark));
-    border-right: 1px solid hsl(var(--background-secondary-dark));
-    letter-spacing: 0.2rem;
-  }
-  textarea {
-      height: 120px;
-      resize: none;
-    }
-  .inputBox .contact-form-input:valid,
-  .inputBox .contact-form-input:focus {
-    border: 1px solid hsl(var(--background-secondary-dark));
-  }
-  
-  .submitbutton {
-    font-family: "Roboto", sans-serif;
-    text-transform: uppercase;
-    margin-top: 10%;
-    outline: 0;
-    background: hsl(var(--background-secondary));
-    width: 100%;
-    border: 0;
-    padding: 15px;
-    color: #FFFFFF;
-    font-size: 14px;
-    -webkit-transition: all 0.3 ease;
-    transition: all 0.3 ease;
-    cursor: pointer;
-  }
-  
-  .submitbutton:hover,
-  .submitbutton:active,
-  .submitbutton:focus {
-    background: hsl(var(--background-secondary-dark));
-  }
-  
-  
-  
-  /* Add responsiveness TO registration */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  flex-direction: column;
+  gap: 30px;
+  background: hsl(var(--background-secondary-light));
+}
+
+.contact-form h2 {
+  color: #fff;
+  font-size: 2em;
+}
+
+.inputBox {
+  position: relative;
+  width: 400px;
+  margin-top: 5%;
+}
+
+.inputBox .contact-form-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: hsl(var(--background-secondary-light));
+  border-radius: 5px;
+  outline: none;
+  color: #fff;
+  font-size: 1em;
+  transition: 0.5s;
+}
+
+.inputBox span {
+  position: absolute;
+  left: 0;
+  top: 3px;
+  padding: 10px;
+  pointer-events: none;
+  font-size: 1em;
+  color: rgba(255, 255, 255, 0.25);
+  text-transform: uppercase;
+  transition: 0.5s;
+}
+
+.inputBox .contact-form-input:valid~span,
+.inputBox .contact-form-input:focus~span {
+  color: white;
+  transform: translateX(10px) translateY(-7px);
+  font-size: 0.65em;
+  padding: 0 10px;
+  background: hsl(var(--background-secondary-light));
+  border-left: 1px solid hsl(var(--background-secondary-dark));
+  border-right: 1px solid hsl(var(--background-secondary-dark));
+  letter-spacing: 0.2rem;
+}
+
+textarea {
+  height: 120px;
+  resize: none;
+}
+
+.inputBox .contact-form-input:valid,
+.inputBox .contact-form-input:focus {
+  border: 1px solid hsl(var(--background-secondary-dark));
+}
+
+.submitbutton {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  margin-top: 10%;
+  outline: 0;
+  background: hsl(var(--background-secondary));
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+
+.submitbutton:hover,
+.submitbutton:active,
+.submitbutton:focus {
+  background: hsl(var(--background-secondary-dark));
+}
+
+
+
+/* Add responsiveness TO registration */
 /*   
   @media (max-width:420px) {
     .inputBox {
