@@ -11,7 +11,15 @@ type User struct {
 	Name     string // A regular string field
 	Email    string `json:"email" gorm:"unique,not null"` // A pointer to a string, allowing for null values
 	Password string // A regular stringx`` field
-	Role     string // A regular string field
+	RoleID   uint   `gorm:"not null;DEFAULT:3" json:"role_id"`
+	Role     Role   `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;" json:"-"`
+}
+
+type Role struct {
+	gorm.Model
+	ID          uint   `gorm:"primary_key"`
+	Name        string `gorm:"size:50;not null;unique" json:"name"`
+	Description string `gorm:"size:255;not null" json:"description"`
 }
 
 type Post struct {

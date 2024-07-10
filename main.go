@@ -22,11 +22,15 @@ func main() {
 	r.MaxMultipartMemory = 1
 	print("Server is running on port 8080")
 	r.Static("/static", "./static")
-	// r.LoadHTMLFiles("./templates/index.html","./templates/Contact/failure.html")
-	// r.LoadHTMLFiles("./templates/index.html")
-	r.LoadHTMLGlob("templates/**/*")
+	
+	r.GET("/", controllers.Home)
 
-	r.GET("/", controllers.GetPosts)
+	// authRoutes := r.Group("/auth/user")
+	// authRoutes.POST("/login", controllers.Login)
+
+	r.GET("/auth/user/login", controllers.Login)
+
+	r.GET("/post", controllers.GetPosts)
 	r.GET("/post/:id", controllers.GetPost)
 
 	r.GET("/contact", controllers.ContactUs)

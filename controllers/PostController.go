@@ -6,8 +6,7 @@ import (
 	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
 	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
 	"github.com/Hrishikesh-Panigrahi/GoCMS/render"
-	postviews "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Posts"
-	views "github.com/Hrishikesh-Panigrahi/GoCMS/templates/index"
+	postview "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Posts"
 	"github.com/gomarkdown/markdown"
 	"github.com/gomarkdown/markdown/html"
 	"github.com/gomarkdown/markdown/parser"
@@ -58,7 +57,7 @@ func GetPosts(c *gin.Context) {
 
 		}
 	}
-	render.Render(c, http.StatusOK, views.Index(posts))
+	render.Render(c, http.StatusOK, postview.Posts(posts))
 }
 
 func GetPost(c *gin.Context) {
@@ -79,5 +78,5 @@ func GetPost(c *gin.Context) {
 
 	post.Content = string(mdToHTML([]byte(post.Content)))
 
-	render.Render(c, http.StatusOK, postviews.Singlepost(post.Title, post.Content))
+	render.Render(c, http.StatusOK, postview.Singlepost(post.Title, post.Content))
 }

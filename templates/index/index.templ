@@ -1,12 +1,10 @@
 package views
 
 import (
-	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
 	views "github.com/Hrishikesh-Panigrahi/GoCMS/templates"
-	"fmt"
 )
 
-templ Index(posts []models.Post) {
+templ Index() {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
@@ -22,22 +20,7 @@ templ Index(posts []models.Post) {
 				views.Link{ Name: "About", Href: "/about"},
 				views.Link{ Name: "Contact", Href: "/contact"},
 			})
-			<!-- Posts -->
-			for _, post:= range posts {
-				<div class="blog">
-					<div class="blog_post">
-						<div class="img_pod">
-							<img src="https://pbs.twimg.com/profile_images/890901007387025408/oztASP4n.jpg" alt="random image"/>
-						</div>
-						<div class="container_copy">
-							<h3>{ post.FormattedDate }</h3>
-							<h1>{ post.Title }</h1>
-							<p>{ post.Description }</p>
-							<a class="btn_primary" href={ templ.URL("/post/" + fmt.Sprintf("%d", post.ID)) }  target="_self">Read More</a>
-						</div>
-					</div>
-				</div>
-			}
+			// todo landing page
 		</body>
 	</html>
 }
