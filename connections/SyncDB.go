@@ -19,13 +19,11 @@ func SyncDB() {
 		log.Fatal("Error migrating the database")
 	}
 	fmt.Println("Database Migrated")
-
-	seedData()
 }
 
-func seedData() {
-	roles := []models.Role{{Name: "Admin", Description: "Admin Role"}, {Name: "Client", Description: "Client Role"}}
-	user := []models.User{{Name: "blah", Email: "blah", Password: "blah", RoleID: 1}}
-	DB.Save(&roles)
-	DB.Save(&user)
-}
+// func seedData() {
+// 	roles := []models.Role{{Name: "Admin", Description: "Admin Role"}, {Name: "Client", Description: "Client Role"}}
+// 	user := []models.User{{Name: "blah", Email: "blah", Password: "blah", RoleID: 1}}
+// 	DB.Save(&roles)
+// 	DB.Save(&user)
+// }

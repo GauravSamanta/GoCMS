@@ -8,9 +8,7 @@ package views
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import (
-	views "github.com/Hrishikesh-Panigrahi/GoCMS/templates"
-)
+import views "github.com/Hrishikesh-Panigrahi/GoCMS/templates"
 
 func Index() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
@@ -30,7 +28,7 @@ func Index() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Form</title><link rel=\"stylesheet\" href=\"/static/styles.css\"><script src=\"/static/js/htmx.min.js\"></script></head><body>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Form</title><link rel=\"stylesheet\" href=\"/static/styles.css\"><link rel=\"stylesheet\" href=\"/static/formstyles.css\"><script src=\"/static/js/htmx.min.js\"></script></head><body>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -42,7 +40,7 @@ func Index() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</body></html>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"form\" id=\"form\"><h2>Login</h2><form action=\"\" method=\"POST\" hx-post=\"/auth/user/login\" hx-target=\"#form\"><div class=\"inputBox\"><input class=\"form-input\" name=\"Email\" type=\"text\" required=\"required\"> <span>Email</span></div><div class=\"inputBox\"><input class=\"form-input\" name=\"Password\" type=\"text\" required=\"required\"> <span>Password</span></div><button class=\"submitbutton\">Submit</button></form></div></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

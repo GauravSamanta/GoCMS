@@ -1,8 +1,6 @@
 package views
 
-import (
-	views "github.com/Hrishikesh-Panigrahi/GoCMS/templates"
-)
+import views "github.com/Hrishikesh-Panigrahi/GoCMS/templates"
 
 templ Index() {
 	<!DOCTYPE html>
@@ -12,15 +10,29 @@ templ Index() {
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 			<title>Form</title>
 			<link rel="stylesheet" href="/static/styles.css"/>
+			<link rel="stylesheet" href="/static/formstyles.css"/>
 			<script src="/static/js/htmx.min.js"></script>
 		</head>
 		<body>
 			@views.Nav([]views.Link{
-				views.Link{ Name: "Home", Href: "/"},
-				views.Link{ Name: "About", Href: "/about"},
-				views.Link{ Name: "Contact", Href: "/contact"},
+				views.Link{Name: "Home", Href: "/"},
+				views.Link{Name: "About", Href: "/about"},
+				views.Link{Name: "Contact", Href: "/contact"},
 			})
-			// todo landing page
+			<div class="form" id="form">
+				<h2>Login</h2>
+				<form action="" method="POST" hx-post="/auth/user/login" hx-target="#form">
+					<div class="inputBox">
+						<input class="form-input" name="Email" type="text" required="required"/>
+						<span>Email</span>
+					</div>
+					<div class="inputBox">
+						<input class="form-input" name="Password" type="text" required="required"/>
+						<span>Password</span>
+					</div>
+					<button class="submitbutton">Submit</button>
+				</form>
+			</div>
 		</body>
 	</html>
 }

@@ -28,7 +28,7 @@ func main() {
 	// authRoutes := r.Group("/auth/user")
 	// authRoutes.POST("/login", controllers.Login)
 
-	r.GET("/auth/user/login", controllers.Login)
+	r.POST("/auth/user/login", controllers.Login)
 
 	r.GET("/post", controllers.GetPosts)
 	r.GET("/post/:id", controllers.GetPost)
