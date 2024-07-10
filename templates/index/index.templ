@@ -17,7 +17,11 @@ templ Index(posts []models.Post) {
 			<script src="/static/js/htmx.min.js"></script>
 		</head>
 		<body>
-			@views.Nav()
+			@views.Nav([]views.Link{
+				views.Link{ Name: "Home", Href: "/"},
+				views.Link{ Name: "About", Href: "/about"},
+				views.Link{ Name: "Contact", Href: "/contact"},
+			})
 			<!-- Posts -->
 			for _, post:= range posts {
 				<div class="blog">

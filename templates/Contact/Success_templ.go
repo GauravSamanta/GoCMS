@@ -32,14 +32,18 @@ func Success(title string, name string, email string, message string) templ.Comp
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = views.Nav().Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = views.Nav([]views.Link{
+			views.Link{Name: "Home", Href: "/"},
+			views.Link{Name: "About", Href: "/about"},
+			views.Link{Name: "Contact", Href: "/contact"},
+		}).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/Contact/Success.templ`, Line: 15, Col: 10}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/Contact/Success.templ`, Line: 19, Col: 10}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -52,7 +56,7 @@ func Success(title string, name string, email string, message string) templ.Comp
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/Contact/Success.templ`, Line: 16, Col: 9}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/Contact/Success.templ`, Line: 20, Col: 9}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -65,7 +69,7 @@ func Success(title string, name string, email string, message string) templ.Comp
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(email)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/Contact/Success.templ`, Line: 17, Col: 10}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/Contact/Success.templ`, Line: 21, Col: 10}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
@@ -78,7 +82,7 @@ func Success(title string, name string, email string, message string) templ.Comp
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(message)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/Contact/Success.templ`, Line: 18, Col: 12}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/Contact/Success.templ`, Line: 22, Col: 12}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {

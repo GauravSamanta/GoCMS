@@ -14,7 +14,11 @@ templ Contact() {
 			<title>Document</title>
 		</head>
 		<body>
-			@views.Nav()
+			@views.Nav([]views.Link{
+				views.Link{ Name: "Home", Href: "/"},
+				views.Link{ Name: "About", Href: "/about"},
+				views.Link{ Name: "Contact", Href: "/contact"},
+			})
 			
 				<div class="contact-form" id="contact-form">
 					<h2>Contact Us</h2>

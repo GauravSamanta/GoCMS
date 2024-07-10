@@ -1,6 +1,11 @@
 package views
 
-templ Nav() {
+type Link struct {
+	Name string
+	Href string
+}
+
+templ Nav(Links []Link) {
 	<!-- Navbar -->
 	<div class="navbarDiv">
 		<nav id="navbar">
@@ -15,54 +20,56 @@ templ Nav() {
 						</svg>
 					</a>
 				</li>
-				<li class="navbar-item flexbox-left">
-					<a class="navbar-item-inner flexbox-left">
-						<div class="navbar-item-inner-icon-wrapper flexbox">
-							<ion-icon name="search-outline"></ion-icon>
-						</div>
-						<span class="link-text">Search</span>
-					</a>
-				</li>
-				<li class="navbar-item flexbox-left">
-					<a class="navbar-item-inner flexbox-left">
-						<div class="navbar-item-inner-icon-wrapper flexbox">
-							<ion-icon name="home-outline"></ion-icon>
-						</div>
-						<span class="link-text">Home</span>
-					</a>
-				</li>
-				<li class="navbar-item flexbox-left">
-					<a class="navbar-item-inner flexbox-left">
-						<div class="navbar-item-inner-icon-wrapper flexbox">
-							<ion-icon name="folder-open-outline"></ion-icon>
-						</div>
-						<span class="link-text">Oders</span>
-					</a>
-				</li>
-				<li class="navbar-item flexbox-left">
-					<a class="navbar-item-inner flexbox-left">
-						<div class="navbar-item-inner-icon-wrapper flexbox">
-							<ion-icon name="people-outline"></ion-icon>
-						</div>
-						<span class="link-text">Our Team</span>
-					</a>
-				</li>
-				<li class="navbar-item flexbox-left">
-					<a class="navbar-item-inner flexbox-left">
-						<div class="navbar-item-inner-icon-wrapper flexbox">
-							<ion-icon name="chatbubbles-outline"></ion-icon>
-						</div>
-						<span class="link-text">Admin</span>
-					</a>
-				</li>
-				<li class="navbar-item flexbox-left">
-					<a class="navbar-item-inner flexbox-left" href="/contact">
-						<div class="navbar-item-inner-icon-wrapper flexbox">
-							<ion-icon name="settings-outline"></ion-icon>
-						</div>
-						<span class="link-text">Contact Us</span>
-					</a>
-				</li>
+				for _, link:= range Links {
+					<li class="navbar-item flexbox-left">
+						<a class="navbar-item-inner flexbox-left" href={templ.URL(link.Href)}>
+							<div class="navbar-item-inner-icon-wrapper flexbox">
+								<ion-icon name="search-outline"></ion-icon>
+							</div>
+							<span class="link-text">{link.Name}</span>
+						</a>
+					</li>
+				}
+				// <li class="navbar-item flexbox-left">
+				// 	<a class="navbar-item-inner flexbox-left">
+				// 		<div class="navbar-item-inner-icon-wrapper flexbox">
+				// 			<ion-icon name="home-outline"></ion-icon>
+				// 		</div>
+				// 		<span class="link-text">Home</span>
+				// 	</a>
+				// </li>
+				// <li class="navbar-item flexbox-left">
+				// 	<a class="navbar-item-inner flexbox-left">
+				// 		<div class="navbar-item-inner-icon-wrapper flexbox">
+				// 			<ion-icon name="folder-open-outline"></ion-icon>
+				// 		</div>
+				// 		<span class="link-text">Oders</span>
+				// 	</a>
+				// </li>
+				// <li class="navbar-item flexbox-left">
+				// 	<a class="navbar-item-inner flexbox-left">
+				// 		<div class="navbar-item-inner-icon-wrapper flexbox">
+				// 			<ion-icon name="people-outline"></ion-icon>
+				// 		</div>
+				// 		<span class="link-text">Our Team</span>
+				// 	</a>
+				// </li>
+				// <li class="navbar-item flexbox-left">
+				// 	<a class="navbar-item-inner flexbox-left">
+				// 		<div class="navbar-item-inner-icon-wrapper flexbox">
+				// 			<ion-icon name="chatbubbles-outline"></ion-icon>
+				// 		</div>
+				// 		<span class="link-text">Admin</span>
+				// 	</a>
+				// </li>
+				// <li class="navbar-item flexbox-left">
+				// 	<a class="navbar-item-inner flexbox-left" href="/contact">
+				// 		<div class="navbar-item-inner-icon-wrapper flexbox">
+				// 			<ion-icon name="settings-outline"></ion-icon>
+				// 		</div>
+				// 		<span class="link-text">Contact Us</span>
+				// 	</a>
+				// </li>
 			</ul>
 		</nav>
 	</div>

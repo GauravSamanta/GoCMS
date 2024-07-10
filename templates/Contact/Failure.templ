@@ -11,7 +11,11 @@ templ Failure(title string, name string, err string) {
 			<title>Document</title>
 		</head>
 		<body>
-			@views.Nav()
+		@views.Nav([]views.Link{
+				views.Link{ Name: "Home", Href: "/"},
+				views.Link{ Name: "About", Href: "/about"},
+				views.Link{ Name: "Contact", Href: "/contact"},
+			})
 			{ title }
 			{ name }
 			{ err }
