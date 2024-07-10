@@ -1,0 +1,28 @@
+package views
+
+import (
+)
+
+templ Singlepost(Title string, Content string) {
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<title>Form</title>
+			<link rel="stylesheet" href="/static/post.css"/>
+			<script src="/static/js/htmx.min.js"></script>
+		</head>
+		<body>
+          // todo back navigation system
+			<div class="blogPost">
+				<div class="blog_post">
+					<div class="container_copy">
+						<h1>{ Title }</h1>
+						@templ.Raw(Content)
+					</div>
+				</div>
+			</div>
+		</body>
+	</html>
+}

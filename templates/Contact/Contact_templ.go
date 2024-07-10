@@ -36,7 +36,7 @@ func Contact() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"content\" id=\"content\"><div class=\"contact-form\" id=\"contact-form\"><h2>Contact Us</h2><form action=\"\" method=\"POST\" hx-post=\"/contactsucess\" hx-target=\"#contact-form\"><div class=\"inputBox\"><input class=\"contact-form-input\" name=\"name\" type=\"text\" required=\"required\"> <span>Name</span></div><div class=\"inputBox\"><input class=\"contact-form-input\" name=\"email\" type=\"email\" required=\"required\"> <span>Email</span></div><div class=\"inputBox\"><textarea class=\"contact-form-input\" name=\"message\" type=\"message\" required=\"required\"></textarea> <span>message</span></div><button class=\"submitbutton\">Submit</button></form></div></div></body></html>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"contact-form\" id=\"contact-form\"><h2>Contact Us</h2><form action=\"\" method=\"POST\" hx-post=\"/contactsucess\" hx-target=\"#contact-form\"><div class=\"inputBox\"><input class=\"contact-form-input\" name=\"name\" type=\"text\" required=\"required\"> <span>Name</span></div><div class=\"inputBox\"><input class=\"contact-form-input\" name=\"email\" type=\"email\" required=\"required\"> <span>Email</span></div><div class=\"inputBox\"><textarea class=\"contact-form-input\" name=\"message\" type=\"message\" required=\"required\"></textarea> <span>message</span></div><button class=\"submitbutton\">Submit</button></form></div></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

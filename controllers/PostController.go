@@ -1,12 +1,12 @@
 package controllers
 
 import (
-	"html/template"
 	"net/http"
 
 	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
 	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
 	"github.com/Hrishikesh-Panigrahi/GoCMS/render"
+	postviews "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Posts"
 	views "github.com/Hrishikesh-Panigrahi/GoCMS/templates/index"
 	"github.com/gomarkdown/markdown"
 	"github.com/gomarkdown/markdown/html"
@@ -79,8 +79,5 @@ func GetPost(c *gin.Context) {
 
 	post.Content = string(mdToHTML([]byte(post.Content)))
 
-	c.HTML(http.StatusOK, "SinglePost.html", gin.H{
-		"Title":   post.Title,
-		"Content": template.HTML(post.Content),
-	})
+	render.Render(c, http.StatusOK, postviews.Singlepost(post.Title, post.Content))
 }
