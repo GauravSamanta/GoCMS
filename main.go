@@ -22,13 +22,18 @@ func main() {
 	r.MaxMultipartMemory = 1
 	print("Server is running on port 8080")
 	r.Static("/static", "./static")
-	
+
 	r.GET("/", controllers.Home)
 
 	// authRoutes := r.Group("/auth/user")
 	// authRoutes.POST("/login", controllers.Login)
 
 	r.POST("/auth/user/login", controllers.Login)
+	r.POST("/auth/user/register", controllers.Register)
+
+	r.POST("/post", controllers.CreatePost)
+	r.PUT("/post", controllers.UpdatePost)
+	r.DELETE("/post", controllers.DeletePost)
 
 	r.GET("/post", controllers.GetPosts)
 	r.GET("/post/:id", controllers.GetPost)
