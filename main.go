@@ -34,8 +34,9 @@ func main() {
 	r.POST("/post", controllers.CreatePost)
 	r.PUT("/post", controllers.UpdatePost)
 	r.DELETE("/post", controllers.DeletePost)
-
 	r.GET("/post", controllers.GetPosts)
+
+	
 	r.GET("/post/:id", controllers.GetPost)
 
 	r.GET("/contact", controllers.ContactUs)
