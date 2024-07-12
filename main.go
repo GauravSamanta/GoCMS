@@ -36,6 +36,9 @@ func main() {
 	r.DELETE("/post", controllers.DeletePost)
 	r.GET("/post", controllers.GetPosts)
 
+	r.POST("/image", controllers.ImageUpload)
+	r.POST("/image/:id", controllers.DeleteImage)
+
 	
 	r.GET("/post/:id", controllers.GetPost)
 

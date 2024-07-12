@@ -26,3 +26,9 @@ env
 
 tmp/
 tmp
+
+templates\*_templ.go
+templates\**\*_templ.go
+templates\*\*_templ.go
+
+media

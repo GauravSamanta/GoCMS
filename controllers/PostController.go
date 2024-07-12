@@ -85,7 +85,7 @@ func GetPost(c *gin.Context) {
 
 // crud by admin
 
-//create post
+// create post
 func CreatePost(c *gin.Context) {
 	var postbody struct {
 		Title       string
@@ -118,10 +118,10 @@ func CreatePost(c *gin.Context) {
 
 }
 
-//update post
-func UpdatePost(c *gin.Context){
+// update post
+func UpdatePost(c *gin.Context) {
 	var postbody struct {
-		ID 		uint
+		ID          uint
 		Title       string
 		Description string
 		Content     string
@@ -148,10 +148,10 @@ func UpdatePost(c *gin.Context){
 	})
 }
 
-//delete post
-func DeletePost(c *gin.Context){
+// delete post
+func DeletePost(c *gin.Context) {
 	var postbody struct {
-		ID 		uint
+		ID uint
 	}
 
 	if c.Bind(&postbody) != nil {

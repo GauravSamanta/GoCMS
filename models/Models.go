@@ -31,4 +31,18 @@ type Post struct {
 	UpdatedAt     time.Time      `json:"updated_at" time_format:"2006-01-02"`              // Standard field for the update time
 	DeletedAt     gorm.DeletedAt `json:"deleted_at" gorm:"index" time_format:"2006-01-02"` // Standard field for soft delete
 	FormattedDate string         `gorm:"-" json:"-"`
+	
+}
+
+type Image struct {
+	UUID string `json:"uuid"`                               // A regular string field
+	ID   uint   `json:"id" gorm:"primaryKey;autoIncrement"` // Standard field for the primary key
+	Name string `json:"name"`                               // A regular string field
+	Path string `json:"path"`                               // A regular string field
+	Alt  string `json:"alt"`                                // A regular string field
+	// PostID    uint           `json:"post_id"`                            // A regular string field
+	// Post      Post           `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;" json:"-"`
+	CreatedAt time.Time      `json:"created_at" time_format:"2006-01-02"`              // Standard field for the creation time
+	UpdatedAt time.Time      `json:"updated_at" time_format:"2006-01-02"`              // Standard field for the update time
+	DeletedAt gorm.DeletedAt `json:"deleted_at" gorm:"index" time_format:"2006-01-02"` // Standard field for soft delete
 }
