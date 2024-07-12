@@ -15,29 +15,28 @@ templ Contact() {
 		</head>
 		<body>
 			@views.Nav([]views.Link{
-				views.Link{ Name: "Home", Href: "/"},
-				views.Link{ Name: "About", Href: "/about"},
-				views.Link{ Name: "Contact", Href: "/contact"},
+				views.Link{Name: "Home", Href: "/"},
+				views.Link{Name: "About", Href: "/about"},
+				views.Link{Name: "Contact", Href: "/contact"},
 			})
-			
-				<div class="form" id="form">
-					<h2>Contact Us</h2>
-					<form action="" method="POST" hx-post="/contactsucess" hx-target="#form">
-						<div class="inputBox">
-							<input class="form-input" name="name" type="text" required="required"/>
-							<span>Name</span>
-						</div>
-						<div class="inputBox">
-							<input class="form-input" name="email" type="email" required="required"/>
-							<span>Email</span>
-						</div>
-						<div class="inputBox">
-							<textarea class="form-input" name="message" type="message" required="required"></textarea>
-							<span>message</span>
-						</div>
-						<button class="submitbutton">Submit</button>
-					</form>
-				</div>
+			<div class="form" id="form">
+				<h2>Contact Us</h2>
+				<form action="" method="POST" hx-post="/contactsucess" hx-target="#form">
+					<div class="inputBox">
+						<input class="form-input" name="name" type="text" required="required"/>
+						<span>Name</span>
+					</div>
+					<div class="inputBox">
+						<input class="form-input" name="email" type="email" required="required"/>
+						<span>Email</span>
+					</div>
+					<div class="inputBox">
+						<textarea class="form-input" name="message" type="message" required="required"></textarea>
+						<span>message</span>
+					</div>
+					<button class="submitbutton">Submit</button>
+				</form>
+			</div>
 			// </div>
 		</body>
 	</html>

@@ -31,7 +31,6 @@ type Post struct {
 	UpdatedAt     time.Time      `json:"updated_at" time_format:"2006-01-02"`              // Standard field for the update time
 	DeletedAt     gorm.DeletedAt `json:"deleted_at" gorm:"index" time_format:"2006-01-02"` // Standard field for soft delete
 	FormattedDate string         `gorm:"-" json:"-"`
-	
 }
 
 type Image struct {

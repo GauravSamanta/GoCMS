@@ -12,9 +12,9 @@ templ Success(title string, name string, email string, message string) {
 		</head>
 		<body>
 			@views.Nav([]views.Link{
-				views.Link{ Name: "Home", Href: "/"},
-				views.Link{ Name: "About", Href: "/about"},
-				views.Link{ Name: "Contact", Href: "/contact"},
+				views.Link{Name: "Home", Href: "/"},
+				views.Link{Name: "About", Href: "/about"},
+				views.Link{Name: "Contact", Href: "/contact"},
 			})
 			{ title }
 			{ name }

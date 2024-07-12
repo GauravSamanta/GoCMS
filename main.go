@@ -39,7 +39,6 @@ func main() {
 	r.POST("/image", controllers.ImageUpload)
 	r.POST("/image/:id", controllers.DeleteImage)
 
-	
 	r.GET("/post/:id", controllers.GetPost)
 
 	r.GET("/contact", controllers.ContactUs)

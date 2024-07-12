@@ -31,7 +31,7 @@ func Nav(Links []Link) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!-- Navbar --><nav class=\"bg-gray-400 p-4\"><div class=\"container mx-auto flex justify-between items-center\"><div class=\"flex items-center space-x-6\"><a href=\"#\" class=\"text-gray-900 text-2xl font-bold\">Logo</a> ")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!-- Navbar --><nav class=\"bg-gray-300 p-4\"><div class=\"container mx-auto flex justify-between items-center\"><div class=\"flex items-center space-x-6\"><a href=\"#\" class=\"text-gray-900 text-2xl font-bold\">Logo</a> ")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

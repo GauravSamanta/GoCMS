@@ -42,7 +42,7 @@ func AddImage(c *gin.Context, image_path string, uuid uuid.UUID) {
 	})
 }
 
-func DeleteImage(c *gin.Context, id string){
+func DeleteImage(c *gin.Context, id string) {
 	// var imagebody struct {
 	// 	ID uint
 	// }
@@ -52,7 +52,7 @@ func DeleteImage(c *gin.Context, id string){
 	// 	})
 	// 	return
 	// }
-	result:= connections.DB.Delete(&models.Image{}, id)
+	result := connections.DB.Delete(&models.Image{}, id)
 
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{

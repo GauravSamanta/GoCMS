@@ -1,9 +1,9 @@
 package views
 
 import (
+	"fmt"
 	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
 	views "github.com/Hrishikesh-Panigrahi/GoCMS/templates"
-	"fmt"
 )
 
 templ Posts(posts []models.Post) {
@@ -18,9 +18,9 @@ templ Posts(posts []models.Post) {
 		</head>
 		<body>
 			@views.Nav([]views.Link{
-				views.Link{ Name: "Home", Href: "/"},
-				views.Link{ Name: "About", Href: "/about"},
-				views.Link{ Name: "Contact", Href: "/contact"},
+				views.Link{Name: "Home", Href: "/"},
+				views.Link{Name: "About", Href: "/about"},
+				views.Link{Name: "Contact", Href: "/contact"},
 			})
 			<!-- Posts -->
 			for _, post:= range posts {
@@ -33,7 +33,7 @@ templ Posts(posts []models.Post) {
 							<h3>{ post.FormattedDate }</h3>
 							<h1>{ post.Title }</h1>
 							<p>{ post.Description }</p>
-							<a class="btn_primary" href={ templ.URL("/post/" + fmt.Sprintf("%d", post.ID)) }  target="_self">Read More</a>
+							<a class="btn_primary" href={ templ.URL("/post/" + fmt.Sprintf("%d", post.ID)) } target="_self">Read More</a>
 						</div>
 					</div>
 				</div>
