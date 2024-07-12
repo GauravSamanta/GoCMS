@@ -4,6 +4,8 @@ import (
 	"net/http"
 
 	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
+	"github.com/Hrishikesh-Panigrahi/GoCMS/services"
+
 	// "github.com/Hrishikesh-Panigrahi/GoCMS/render"
 	// views "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Contact"
 
@@ -16,8 +18,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 )
-
-
 
 func Login(c *gin.Context) {
 	var body struct {
@@ -62,8 +62,10 @@ func Login(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "Logged in as admin",
 		})
-	} 
+	}
 
+	//set cookies and jwt token
+	services.JwtToken(c, user)
 	// render.Render(c, 200, views.Contact())
 }
 
@@ -71,7 +73,7 @@ func Register(c *gin.Context) {
 	var body struct {
 		Email    string
 		Password string
-		Role_ID uint
+		Role_ID  uint
 	}
 
 	if c.Bind(&body) != nil {
