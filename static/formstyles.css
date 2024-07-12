@@ -86,19 +86,3 @@ textarea {
 .submitbutton:focus {
   background: hsl(var(--background-secondary-dark));
 }
-
-
-
-/* Add responsiveness TO registration */
-/*   
-  @media (max-width:420px) {
-    .inputBox {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .inputBox {
-      margin-bottom: 5px;
-    }
-  
-  }  */

@@ -28,7 +28,7 @@ func Index() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Form</title><link rel=\"stylesheet\" href=\"/static/styles.css\"><link rel=\"stylesheet\" href=\"/static/formstyles.css\"><script src=\"/static/js/htmx.min.js\"></script></head><body>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Form</title><link href=\"https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css\" rel=\"stylesheet\"><script src=\"/static/js/htmx.min.js\"></script></head><body>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -40,7 +40,7 @@ func Index() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"form\" id=\"form\"><h2>Login</h2><form action=\"\" method=\"POST\" hx-post=\"/auth/user/login\" hx-target=\"#form\"><div class=\"inputBox\"><input class=\"form-input\" name=\"Email\" type=\"text\" required=\"required\"> <span>Email</span></div><div class=\"inputBox\"><input class=\"form-input\" name=\"Password\" type=\"text\" required=\"required\"> <span>Password</span></div><button class=\"submitbutton\">Submit</button></form></div></body></html>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"bg-gray-200 flex items-center justify-center h-screen form\" id=\"form\"><div class=\"bg-white p-6 rounded-lg shadow-lg w-full max-w-sm dark-mode-target\"><h2 class=\"text-2xl font-bold mb-5 text-center\">Login</h2><form action=\"\" method=\"POST\" hx-post=\"/auth/user/login\" hx-target=\"#form\"><div class=\"mb-4\"><label class=\"block text-gray-700 text-sm font-bold mb-2\" for=\"username\">Username</label> <input class=\"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline\" id=\"username\" type=\"text\" name=\"Email\" placeholder=\"Enter your username\"></div><div class=\"mb-6\"><label class=\"block text-gray-700 text-sm font-bold mb-2\" for=\"password\">Password</label> <input class=\"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline\" id=\"password\" type=\"password\" name=\"Password\" placeholder=\"Enter your password\"></div><div class=\"flex items-center justify-between\"><button class=\"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline\" type=\"submit\">Login</button></div><div class=\"mt-4 text-center\"><p class=\"text-gray-700 text-sm\">If not registered, <a href=\"#\" class=\"text-blue-500 hover:text-blue-700\">register here</a></p></div></form></div></div></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
