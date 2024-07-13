@@ -1,6 +1,3 @@
-# If you prefer the allow list template instead of the deny list, see community template:
-# https://github.com/github/gitignore/blob/main/community/Golang/Go.AllowList.gitignore
-#
 # Binaries for programs and plugins
 *.exe
 *.exe~
@@ -21,18 +18,17 @@
 go.work
 go.work.sum
 
+# Environment file for the application
 env
 .env
 
+# Binary file for the application
 tmp/
 tmp
 
-templates\*_templ.go
-templates\**\*_templ.go
-templates\*\*_templ.go
+# Generated file for templ
+*_templ.go
 
+# Media directory for storing
 media
-
-package.json
-
-node_modules
+media/

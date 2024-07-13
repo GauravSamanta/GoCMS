@@ -60,6 +60,7 @@ A simple CMS (Content Management System) built with Go, GORM, and the Gin framew
 2. Open your browser and navigate to `http://localhost:8080`.
 
 ## Project Structure
+```
 gocms/
 │
 ├── controllers/
@@ -83,7 +84,7 @@ gocms/
 ├── main.go
 ├── go.mod
 └── go.sum
-
+```
 ## Routes
 
 - `GET /` - Home page, list all posts
