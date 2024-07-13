@@ -11,7 +11,6 @@ A simple CMS (Content Management System) built with Go, GORM, and the Gin framew
 - [Project Structure](#project-structure)
 - [Routes](#routes)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
@@ -22,7 +21,7 @@ A simple CMS (Content Management System) built with Go, GORM, and the Gin framew
 
 ## Requirements
 
-- Go 1.16+
+- Go 1.22+
 - A SQL database (e.g., PostgreSQL, MySQL, SQLite)
 - Git
 

@@ -24,6 +24,7 @@ func main() {
 	r.Static("/static", "./static")
 
 	r.GET("/", controllers.Home)
+	r.GET("/register", controllers.RegisterPage)
 
 	// authRoutes := r.Group("/auth/user")
 	// authRoutes.POST("/login", controllers.Login)

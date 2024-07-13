@@ -11,3 +11,7 @@ import (
 func Home(c *gin.Context) {
 	render.Render(c, http.StatusOK, views.Index())
 }
+
+func RegisterPage(c *gin.Context) {
+	render.Render(c, http.StatusOK, views.Registration())
+}

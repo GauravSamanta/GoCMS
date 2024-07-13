@@ -80,7 +80,7 @@ func GetPost(c *gin.Context) {
 
 	post.Content = string(mdToHTML([]byte(post.Content)))
 
-	render.Render(c, http.StatusOK, postview.Singlepost(post.Title, post.Content))
+	render.Render(c, http.StatusOK, postview.Singlepost(post.Title, post.Description ,post.Content))
 }
 
 // crud by admin
