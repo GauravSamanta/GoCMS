@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
+	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
 	"github.com/Hrishikesh-Panigrahi/GoCMS/services"
 
 	// "github.com/Hrishikesh-Panigrahi/GoCMS/render"
@@ -11,12 +12,8 @@ import (
 
 	// views "github.com/Hrishikesh-Panigrahi/GoCMS/templates/user"
 	// "fmt"
-
-	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
-
-	"golang.org/x/crypto/bcrypt"
-
 	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func Login(c *gin.Context) {
@@ -59,13 +56,15 @@ func Login(c *gin.Context) {
 
 	// like this we can redirect accordingly
 	if user.RoleID == 1 {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "Logged in as admin",
-		})
+		c.Redirect(http.StatusMovedPermanently, "/admin")
+	} else {
+		c.Redirect(http.StatusMovedPermanently, "/post")
 	}
 
 	//set cookies and jwt token
 	services.JwtToken(c, user)
+
+	c.Redirect(http.StatusMovedPermanently, "/post")
 	// render.Render(c, 200, views.Contact())
 }
 

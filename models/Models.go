@@ -11,7 +11,7 @@ type User struct {
 	Name     string // A regular string field
 	Email    string `json:"email" gorm:"unique,not null"` // A pointer to a string, allowing for null values
 	Password string // A regular stringx`` field
-	RoleID   uint   `gorm:"not null;DEFAULT:3" json:"role_id"`
+	RoleID   uint   `gorm:"not null;DEFAULT:2" json:"role_id"`
 	Role     Role   `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;" json:"-"`
 }
 
@@ -31,6 +31,9 @@ type Post struct {
 	UpdatedAt     time.Time      `json:"updated_at" time_format:"2006-01-02"`              // Standard field for the update time
 	DeletedAt     gorm.DeletedAt `json:"deleted_at" gorm:"index" time_format:"2006-01-02"` // Standard field for soft delete
 	FormattedDate string         `gorm:"-" json:"-"`
+	//relationship with user
+	UserID uint `json:"user_id"`
+	User   User `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE,foreignKey:UserID;" json:"-"`
 }
 
 type Image struct {
@@ -44,4 +47,7 @@ type Image struct {
 	CreatedAt time.Time      `json:"created_at" time_format:"2006-01-02"`              // Standard field for the creation time
 	UpdatedAt time.Time      `json:"updated_at" time_format:"2006-01-02"`              // Standard field for the update time
 	DeletedAt gorm.DeletedAt `json:"deleted_at" gorm:"index" time_format:"2006-01-02"` // Standard field for soft delete
+	//todo relationship with post
+	// PostID uint `json:"post_id"`
+	// Post   Post `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE,foreignKey:PostID;" json:"-"`
 }

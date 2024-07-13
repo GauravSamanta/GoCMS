@@ -43,20 +43,28 @@ func mdToHTML(md []byte) []byte {
 func GetPosts(c *gin.Context) {
 	var posts []models.Post
 
-	result := connections.DB.Find(&posts)
-	if result.Error != nil {
+	postresult := connections.DB.Find(&posts)
+	if postresult.Error != nil {
 		c.HTML(http.StatusNotFound, "404.html", gin.H{
 			"Title": "404 Posts not found",
 			"error": "Posts not found",
 		})
 	}
 
+	result := connections.DB.Preload("User").Find(&posts)
+	if result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
+		return
+	}
+
 	for i := 0; i < len(posts); i++ {
+		// get the user for each post
+		// connections.DB.Model(&posts[i]).Association("User").Find(&posts[i].UserID)
+
 		posts[i].FormattedDate = posts[i].CreatedAt.Format("02 January 2006")
 		posts[i].Title = strings.ToUpper(posts[i].Title)
 		if len(posts[i].Description) > 100 {
 			posts[i].Description = firstN2(posts[i].Description, 100, "....")
-
 		}
 	}
 	render.Render(c, http.StatusOK, postview.Posts(posts))
@@ -80,7 +88,7 @@ func GetPost(c *gin.Context) {
 
 	post.Content = string(mdToHTML([]byte(post.Content)))
 
-	render.Render(c, http.StatusOK, postview.Singlepost(post.Title, post.Description ,post.Content))
+	render.Render(c, http.StatusOK, postview.Singlepost(post.Title, post.Description, post.Content))
 }
 
 // crud by admin

@@ -8,37 +8,53 @@ templ Contact() {
 		<head>
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-			<link rel="stylesheet" href="/static/styles.css"/>
-			<link rel="stylesheet" href="/static/formstyles.css"/>
 			<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
 			<script src="/static/js/htmx.min.js"></script>
 			<title>Document</title>
 		</head>
-		<body>
+		<body class="bg-gray-100">
 			@views.Nav([]views.Link{
 				views.Link{Name: "Home", Href: "/"},
 				views.Link{Name: "About", Href: "/about"},
 				views.Link{Name: "Contact", Href: "/contact"},
 			})
-			<div class="form" id="form">
-				<h2>Contact Us</h2>
-				<form action="" method="POST" hx-post="/contactsucess" hx-target="#form">
-					<div class="inputBox">
-						<input class="form-input" name="name" type="text" required="required"/>
-						<span>Name</span>
-					</div>
-					<div class="inputBox">
-						<input class="form-input" name="email" type="email" required="required"/>
-						<span>Email</span>
-					</div>
-					<div class="inputBox">
-						<textarea class="form-input" name="message" type="message" required="required"></textarea>
-						<span>message</span>
-					</div>
-					<button class="submitbutton">Submit</button>
-				</form>
+			<div class="min-h-screen flex items-center justify-center p-4 mt-18" id="form">
+				<div class="max-w-screen-lg bg-white rounded-lg shadow-lg p-8 md:p-12 mt-8 mb-8 w-full">
+					<h2 class="text-3xl font-bold mb-6 text-center">Contact Us</h2>
+					<form action="#" method="POST" hx-post="/contactsucess" hx-target="#form">
+						<div class="mb-4">
+							<label for="name" class="block text-gray-700 font-bold mb-2">Name</label>
+							<input type="text" id="name" name="name" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+						</div>
+						<div class="mb-4">
+							<label for="email" class="block text-gray-700 font-bold mb-2">Email</label>
+							<input type="email" id="email" name="email" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+						</div>
+						// 		<div class="mb-4">
+						//     <label for="subject" class="block text-gray-700 font-bold mb-2">Subject</label>
+						//     <input type="text" id="subject" name="subject" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+						// </div>
+						<div class="mb-4">
+							<label for="message" class="block text-gray-700 font-bold mb-2">Message</label>
+							<textarea id="message" name="message" rows="6" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
+						</div>
+						// <div class="mb-4">
+						// 	<label for="phone" class="block text-gray-700 font-bold mb-2">Phone Number</label>
+						// 	<input type="tel" id="phone" name="phone" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+						// </div>
+						// <div class="mb-6">
+						// 	<label for="preferred-contact" class="block text-gray-700 font-bold mb-2">Preferred Method of Contact</label>
+						// 	<select id="preferred-contact" name="preferred-contact" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+						// 		<option>Email</option>
+						// 		<option>Phone</option>
+						// 	</select>
+						// </div>
+						<div class="text-center">
+							<button type="submit" class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">Send Message</button>
+						</div>
+					</form>
+				</div>
 			</div>
-			// </div>
 		</body>
 	</html>
 }

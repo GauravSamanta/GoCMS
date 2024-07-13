@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 	"net/mail"
 
@@ -11,13 +10,6 @@ import (
 )
 
 func ContactUs(c *gin.Context) {
-	message := c.PostForm("message")
-	email := c.PostForm("email")
-	name := c.PostForm("name")
-
-	fmt.Println("Name: ", name)
-	fmt.Println("Email: ", email)
-	fmt.Println("Message: ", message)
 	render.Render(c, http.StatusOK, views.Contact())
 }
 
