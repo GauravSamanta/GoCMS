@@ -7,8 +7,6 @@ import (
 	"github.com/Hrishikesh-Panigrahi/GoCMS/controllers"
 	"github.com/Hrishikesh-Panigrahi/GoCMS/services"
 
-	// "github.com/Hrishikesh-Panigrahi/GoCMS/services"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -28,9 +26,6 @@ func main() {
 
 	r.GET("/", controllers.Home)
 	r.GET("/register", controllers.RegisterPage)
-
-	// authRoutes := r.Group("/auth/user")
-	// authRoutes.POST("/login", controllers.Login)
 
 	r.POST("/auth/user/login", controllers.Login)
 	r.POST("/auth/user/register", controllers.Register)

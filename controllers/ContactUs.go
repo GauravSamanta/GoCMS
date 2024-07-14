@@ -22,12 +22,9 @@ func ContactMessage(c *gin.Context) {
 
 	_, err := mail.ParseAddress(email)
 	if err != nil {
-		render.Render(c, http.StatusBadRequest, views.Failure("failure", name, err.Error()))
+		render.Render(c, http.StatusBadRequest, views.Failure("Failure in Parsing Email Address", name, err.Error()))
 		return
 	}
 
-	print("Name: ", name)
-	print("Email: ", email)
-	print("Message: ", message)
 	render.Render(c, http.StatusAccepted, views.Success("Sucess", name, email, message))
 }

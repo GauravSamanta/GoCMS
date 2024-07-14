@@ -14,9 +14,9 @@ templ Contact() {
 		</head>
 		<body class="bg-gray-100">
 			@views.Nav([]views.Link{
-				views.Link{Name: "Home", Href: "/"},
-				views.Link{Name: "About", Href: "/about"},
-				views.Link{Name: "Contact", Href: "/contact"},
+				{Name: "Home", Href: "/"},
+				{Name: "About", Href: "/about"},
+				{Name: "Contact", Href: "/contact"},
 			})
 			<div class="min-h-screen flex items-center justify-center p-4 mt-18" id="form">
 				<div class="max-w-screen-lg bg-white rounded-lg shadow-lg p-8 md:p-12 mt-8 mb-8 w-full">

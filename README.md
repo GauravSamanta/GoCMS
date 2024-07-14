@@ -29,36 +29,37 @@ A simple CMS (Content Management System) built with Go, GORM, and the Gin framew
 
 1. Clone the repository:
 
-    ```sh
-    git clone https://github.com/Hrishikesh-Panigrahi/GoCMS.git
-    cd GoCMS
-    ```
+   ```sh
+   git clone https://github.com/Hrishikesh-Panigrahi/GoCMS.git
+   cd GoCMS
+   ```
 
 2. Install dependencies:
 
-    ```sh
-    go mod tidy
-    ```
+   ```sh
+   go mod tidy
+   ```
 
 3. Set up your database and update the database connection details in the `config` file.
 
 4. Run database migrations:
 
-    ```sh
-    go run main.go migrate
-    ```
+   ```sh
+   go run main.go migrate
+   ```
 
 ## Usage
 
 1. Run the application:
 
-    ```sh
-    go run main.go
-    ```
+   ```sh
+   go run main.go
+   ```
 
 2. Open your browser and navigate to `http://localhost:8080`.
 
 ## Project Structure
+
 ```
 gocms/
 │
@@ -84,6 +85,7 @@ gocms/
 ├── go.mod
 └── go.sum
 ```
+
 ## Routes
 
 - `GET /` - Home page, list all posts
@@ -105,4 +107,3 @@ gocms/
 3. Make your changes and commit them (`git commit -m 'Add new feature'`).
 4. Push to the branch (`git push origin feature-branch`).
 5. Create a new Pull Request.
-
