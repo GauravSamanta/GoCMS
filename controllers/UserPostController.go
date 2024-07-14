@@ -4,6 +4,7 @@ import (
 	// "errors"
 	"fmt"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 
@@ -11,6 +12,7 @@ import (
 	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
 	"github.com/Hrishikesh-Panigrahi/GoCMS/render"
 	postview "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Posts"
+	"github.com/rs/zerolog/log"
 
 	"github.com/gin-gonic/gin"
 )
@@ -26,12 +28,12 @@ func GetPosts(c *gin.Context) {
 		})
 	}
 
-	result := connections.DB.Preload("User").Preload("Post").Preload("Image").Find(&posts)
+	result := connections.DB.Preload("User").Preload("Post").Find(&posts)
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
 		return
 	}
-	
+
 	for i := 0; i < len(posts); i++ {
 		posts[i].Post.FormatAndTruncate()
 	}
@@ -61,10 +63,13 @@ func GetPost(c *gin.Context) {
 
 // create post
 func CreatePost(c *gin.Context) {
+	image_path := ImageUpload(c)
+
 	var postbody struct {
 		Title       string
 		Description string
 		Content     string
+		Alt         string
 	}
 
 	if c.Bind(&postbody) != nil {
@@ -80,10 +85,18 @@ func CreatePost(c *gin.Context) {
 
 	fmt.Println(userobj.ID)
 
-	post := models.Post{Title: postbody.Title, Description: postbody.Description, Content: postbody.Content, CreatedAt: time.Now(), UpdatedAt: time.Now()}
+	post := models.Post{Title: postbody.Title, Description: postbody.Description, Content: postbody.Content, Path: image_path, Alt: postbody.Alt, CreatedAt: time.Now(), UpdatedAt: time.Now()}
 
 	result := connections.DB.Create(&post)
-
+	
+	if result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Error while creating the post",
+		})
+		return
+	}
+	
+	result = connections.DB.Create(&models.UserPostImageLink{UserID: userobj.ID, PostID: post.ID})
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": "Error while creating the post",
@@ -95,8 +108,7 @@ func CreatePost(c *gin.Context) {
 		"message": "Post created successfully",
 		"result":  post,
 	})
-	
-	// ImageUpload(c)
+
 }
 
 // update post
@@ -140,6 +152,14 @@ func DeletePost(c *gin.Context) {
 			"message": "Invalid input",
 		})
 		return
+	}
+
+	image := GetImage(c, postbody.ID)
+
+	err := os.Remove(image.Path)
+	if err != nil {
+		log.Error().Msgf("could not delete the file: %v", err)
+		// No return because we have to remove the database entry nonetheless.
 	}
 
 	result := connections.DB.Delete(&models.Post{}, postbody.ID)

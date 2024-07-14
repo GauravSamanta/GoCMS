@@ -1,6 +1,9 @@
 package controllers
 
 import (
+	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
+	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
+	"github.com/gin-gonic/gin"
 	"github.com/gomarkdown/markdown"
 	"github.com/gomarkdown/markdown/html"
 	"github.com/gomarkdown/markdown/parser"
@@ -18,4 +21,10 @@ func MdToHTML(md []byte) []byte {
 	renderer := html.NewRenderer(opts)
 
 	return markdown.Render(doc, renderer)
+}
+
+func GetImage(c *gin.Context, id uint) models.Post {
+	var image models.Post
+	connections.DB.First(&image, id)
+	return image
 }

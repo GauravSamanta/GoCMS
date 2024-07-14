@@ -13,7 +13,7 @@ import (
 func AdminGetPosts(c *gin.Context) {
 	var posts []models.UserPostImageLink
 
-	result := connections.DB.Preload("User").Preload("Image").Preload("Post").Find(&posts)
+	result := connections.DB.Preload("User").Preload("Image").Find(&posts)
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
 		return

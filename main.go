@@ -5,6 +5,8 @@ import (
 
 	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
 	"github.com/Hrishikesh-Panigrahi/GoCMS/controllers"
+	"github.com/Hrishikesh-Panigrahi/GoCMS/services"
+
 	// "github.com/Hrishikesh-Panigrahi/GoCMS/services"
 
 	"github.com/gin-gonic/gin"
@@ -42,12 +44,9 @@ func main() {
 	// for user
 	r.GET("/user/post/", controllers.GetPosts)
 	r.GET("/user/post/:id", controllers.GetPost)
-	r.POST("/user/create/post", controllers.CreatePost)
+	r.POST("/user/create/post", services.AuthMiddleware, controllers.CreatePost)
 	r.PUT("/user/post/:id", controllers.UpdatePost)
 	r.DELETE("/user/post/:id", controllers.DeletePost)
-
-	r.POST("/image", controllers.ImageUpload)
-	r.DELETE("/image/:id", controllers.DeleteImage)
 
 	r.GET("/contact", controllers.ContactUs)
 	r.POST("/contactsucess", controllers.ContactMessage)
