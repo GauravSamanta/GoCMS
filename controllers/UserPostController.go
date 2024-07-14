@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"strings"
 	"time"
 
 	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
@@ -18,7 +17,7 @@ import (
 )
 
 func GetPosts(c *gin.Context) {
-	var posts []models.UserPostImageLink
+	var posts []models.UserPostLink
 
 	postresult := connections.DB.Find(&posts)
 	if postresult.Error != nil {
@@ -53,10 +52,10 @@ func GetPost(c *gin.Context) {
 		})
 	}
 
-	post.FormattedDate = post.CreatedAt.Format("02 January 2006")
-	post.Title = strings.ToUpper(post.Title)
+	// post.FormattedDate = post.CreatedAt.Format("02 January 2006")
+	// post.Title = strings.ToUpper(post.Title)
 
-	post.Content = string(MdToHTML([]byte(post.Content)))
+	// post.Content = string(models.MdToHTML([]byte(post.Content)))
 
 	render.Render(c, http.StatusOK, postview.Singlepost(post.Title, post.Description, post.Content))
 }
@@ -69,6 +68,8 @@ func CreatePost(c *gin.Context) {
 		Title       string
 		Description string
 		Content     string
+		Category    string
+		Tags        string
 		Alt         string
 	}
 
@@ -85,18 +86,19 @@ func CreatePost(c *gin.Context) {
 
 	fmt.Println(userobj.ID)
 
-	post := models.Post{Title: postbody.Title, Description: postbody.Description, Content: postbody.Content, Path: image_path, Alt: postbody.Alt, CreatedAt: time.Now(), UpdatedAt: time.Now()}
+	post := models.Post{Title: postbody.Title, Description: postbody.Description, Content: postbody.Content,
+		Category: postbody.Category, Tags: postbody.Tags, Path: image_path, Alt: postbody.Alt, CreatedAt: time.Now(), UpdatedAt: time.Now()}
 
 	result := connections.DB.Create(&post)
-	
+
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": "Error while creating the post",
 		})
 		return
 	}
-	
-	result = connections.DB.Create(&models.UserPostImageLink{UserID: userobj.ID, PostID: post.ID})
+
+	result = connections.DB.Create(&models.UserPostLink{UserID: userobj.ID, PostID: post.ID})
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": "Error while creating the post",
@@ -114,11 +116,14 @@ func CreatePost(c *gin.Context) {
 // update post
 func UpdatePost(c *gin.Context) {
 	var postbody struct {
-		ID          uint
 		Title       string
 		Description string
 		Content     string
+		Category    string
+		Tags        string
 	}
+
+	ID := StringToUint(c.Param("id"))
 
 	if c.Bind(&postbody) != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -127,7 +132,9 @@ func UpdatePost(c *gin.Context) {
 		return
 	}
 
-	result := connections.DB.Save(&models.Post{ID: postbody.ID, Title: postbody.Title, Description: postbody.Description, Content: postbody.Content, UpdatedAt: time.Now()})
+	result := connections.DB.Save(&models.Post{ID: ID, Title: postbody.Title, Description: postbody.Description,
+		Content: postbody.Content, Category: postbody.Category, Tags: postbody.Tags,
+		UpdatedAt: time.Now()})
 
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{

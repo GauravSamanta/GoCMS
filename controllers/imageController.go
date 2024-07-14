@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 	"path/filepath"
 
@@ -30,7 +29,7 @@ func ImageUpload(c *gin.Context) string {
 
 	file := file_array[0]
 
-	filename := fmt.Sprintf("%s", file.Filename)
+	filename := file.Filename
 	image_path := filepath.Join("./media", filename)
 
 	err = c.SaveUploadedFile(file, image_path)

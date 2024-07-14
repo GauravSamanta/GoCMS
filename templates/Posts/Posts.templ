@@ -6,7 +6,7 @@ import (
 	views "github.com/Hrishikesh-Panigrahi/GoCMS/templates"
 )
 
-templ Posts(posts []models.UserPostImageLink) {
+templ Posts(posts []models.UserPostLink) {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
@@ -31,8 +31,13 @@ templ Posts(posts []models.UserPostImageLink) {
 								<h3 class="text-blue-500 text-xs font-bold uppercase">{ post.Post.FormattedDate }</h3>
 								<h1 class="text-xl font-bold mt-2">{ post.Post.Title }</h1>
 								<p class="mt-2 text-gray-700">{ post.Post.Description }</p>
+								<p class="text-sm text-gray-500 mt-1"><strong>Category:</strong> { post.Post.Category }</p>
+								<div class="mt-2">
+									<strong>Tags:</strong>
+									<span class="bg-blue-100 text-blue-500 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">{ post.Post.Tags }</span>
+								</div>
 								<p class="text-sm text-gray-500 mt-1">By { post.User.Name }</p>
-								<a href={ templ.URL("user/post/" + fmt.Sprintf("%d", post.Post.ID)) } class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring" target="_self">Read More</a>
+								<a href={ templ.URL("/user/post/" + fmt.Sprintf("%d", post.Post.ID)) } class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring" target="_self">Read More</a>
 							</div>
 						</div>
 					}

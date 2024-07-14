@@ -42,11 +42,11 @@ func main() {
 	r.DELETE("/post", controllers.AdminDeletePost)
 
 	// for user
-	r.GET("/user/post/", controllers.GetPosts)
-	r.GET("/user/post/:id", controllers.GetPost)
+	r.GET("/user/post/", services.AuthMiddleware,controllers.GetPosts)
+	r.GET("/user/post/:id", services.AuthMiddleware, controllers.GetPost)
 	r.POST("/user/create/post", services.AuthMiddleware, controllers.CreatePost)
-	r.PUT("/user/post/:id", controllers.UpdatePost)
-	r.DELETE("/user/post/:id", controllers.DeletePost)
+	r.PUT("/user/post/:id", services.AuthMiddleware, controllers.UpdatePost)
+	r.DELETE("/user/post/:id", services.AuthMiddleware, controllers.DeletePost)
 
 	r.GET("/contact", controllers.ContactUs)
 	r.POST("/contactsucess", controllers.ContactMessage)

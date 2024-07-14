@@ -11,7 +11,7 @@ import (
 )
 
 func AdminGetPosts(c *gin.Context) {
-	var posts []models.UserPostImageLink
+	var posts []models.UserPostLink
 
 	result := connections.DB.Preload("User").Preload("Image").Find(&posts)
 	if result.Error != nil {
