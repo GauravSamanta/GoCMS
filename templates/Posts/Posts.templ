@@ -6,7 +6,7 @@ import (
 	views "github.com/Hrishikesh-Panigrahi/GoCMS/templates"
 )
 
-templ Posts(posts []models.Post) {
+templ Posts(posts []models.UserPostImageLink) {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
@@ -28,11 +28,11 @@ templ Posts(posts []models.Post) {
 						<div class="bg-white rounded-lg shadow-md overflow-hidden">
 							<img src="https://tinyurl.com/4d7593fm" alt="Post Image" class="w-full h-48 object-cover"/>
 							<div class="p-4">
-								<h3 class="text-blue-500 text-xs font-bold uppercase">{ post.FormattedDate }</h3>
-								<h1 class="text-xl font-bold mt-2">{ post.Title }</h1>
-								<p class="mt-2 text-gray-700">{ post.Description }</p>
+								<h3 class="text-blue-500 text-xs font-bold uppercase">{ post.Post.FormattedDate }</h3>
+								<h1 class="text-xl font-bold mt-2">{ post.Post.Title }</h1>
+								<p class="mt-2 text-gray-700">{ post.Post.Description }</p>
 								<p class="text-sm text-gray-500 mt-1">By { post.User.Name }</p>
-								<a href={ templ.URL("/post/" + fmt.Sprintf("%d", post.ID)) } class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring" target="_self">Read More</a>
+								<a href={ templ.URL("/post/" + fmt.Sprintf("%d", post.Post.ID)) } class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring" target="_self">Read More</a>
 							</div>
 						</div>
 					}

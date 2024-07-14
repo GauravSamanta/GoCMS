@@ -14,16 +14,18 @@ func SyncDB() {
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
-	err = DB.AutoMigrate(&models.User{}, &models.Post{}, &models.Role{}, &models.Image{})
+	err = DB.AutoMigrate(&models.User{}, &models.Post{}, &models.Role{}, &models.Image{}, &models.UserPostImageLink{})
 	if err != nil {
 		log.Fatal("Error migrating the database")
 	}
 	fmt.Println("Database Migrated")
+	// seedData()
 }
 
 // func seedData() {
-// 	roles := []models.Role{{Name: "Admin", Description: "Admin Role"}, {Name: "Client", Description: "Client Role"}}
-// 	user := []models.User{{Name: "blah", Email: "blah", Password: "blah", RoleID: 1}}
+// 	roles := []models.UserPostImageLink{{UserID: 26, PostID: 1, ImageID:1}, {UserID: 27, PostID: 2, ImageID:2}}
+// 	// user := []models.User{{Name: "blah", Email: "blah", Password: "blah", RoleID: 1}}
+	
 // 	DB.Save(&roles)
-// 	DB.Save(&user)
+// 	// DB.Save(&user)
 // }

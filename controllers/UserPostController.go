@@ -1,47 +1,22 @@
 package controllers
 
 import (
+	// "errors"
+	"fmt"
 	"net/http"
+	"strings"
+	"time"
 
 	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
 	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
 	"github.com/Hrishikesh-Panigrahi/GoCMS/render"
 	postview "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Posts"
-	"github.com/gomarkdown/markdown"
-	"github.com/gomarkdown/markdown/html"
-	"github.com/gomarkdown/markdown/parser"
-
-	"time"
-
-	"strings"
 
 	"github.com/gin-gonic/gin"
 )
 
-func firstN2(s string, n int, suffix string) string {
-	r := []rune(s)
-	if len(r) > n {
-		return string(r[:n]) + suffix
-	}
-	return s
-}
-
-func mdToHTML(md []byte) []byte {
-	// create markdown parser with extensions
-	extensions := parser.CommonExtensions | parser.AutoHeadingIDs | parser.NoEmptyLineBeforeBlock
-	p := parser.NewWithExtensions(extensions)
-	doc := p.Parse(md)
-
-	// create HTML renderer with extensions
-	htmlFlags := html.CommonFlags | html.HrefTargetBlank
-	opts := html.RendererOptions{Flags: htmlFlags}
-	renderer := html.NewRenderer(opts)
-
-	return markdown.Render(doc, renderer)
-}
-
 func GetPosts(c *gin.Context) {
-	var posts []models.Post
+	var posts []models.UserPostImageLink
 
 	postresult := connections.DB.Find(&posts)
 	if postresult.Error != nil {
@@ -51,21 +26,14 @@ func GetPosts(c *gin.Context) {
 		})
 	}
 
-	result := connections.DB.Preload("User").Find(&posts)
+	result := connections.DB.Preload("User").Preload("Post").Preload("Image").Find(&posts)
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
 		return
 	}
-
+	
 	for i := 0; i < len(posts); i++ {
-		// get the user for each post
-		// connections.DB.Model(&posts[i]).Association("User").Find(&posts[i].UserID)
-
-		posts[i].FormattedDate = posts[i].CreatedAt.Format("02 January 2006")
-		posts[i].Title = strings.ToUpper(posts[i].Title)
-		if len(posts[i].Description) > 100 {
-			posts[i].Description = firstN2(posts[i].Description, 100, "....")
-		}
+		posts[i].Post.FormatAndTruncate()
 	}
 	render.Render(c, http.StatusOK, postview.Posts(posts))
 }
@@ -86,12 +54,10 @@ func GetPost(c *gin.Context) {
 	post.FormattedDate = post.CreatedAt.Format("02 January 2006")
 	post.Title = strings.ToUpper(post.Title)
 
-	post.Content = string(mdToHTML([]byte(post.Content)))
+	post.Content = string(MdToHTML([]byte(post.Content)))
 
 	render.Render(c, http.StatusOK, postview.Singlepost(post.Title, post.Description, post.Content))
 }
-
-// crud by admin
 
 // create post
 func CreatePost(c *gin.Context) {
@@ -108,6 +74,12 @@ func CreatePost(c *gin.Context) {
 		return
 	}
 
+	//get the user id from the token
+	user, _ := c.Get("user")
+	userobj := user.(models.User)
+
+	fmt.Println(userobj.ID)
+
 	post := models.Post{Title: postbody.Title, Description: postbody.Description, Content: postbody.Content, CreatedAt: time.Now(), UpdatedAt: time.Now()}
 
 	result := connections.DB.Create(&post)
@@ -123,7 +95,8 @@ func CreatePost(c *gin.Context) {
 		"message": "Post created successfully",
 		"result":  post,
 	})
-
+	
+	// ImageUpload(c)
 }
 
 // update post
@@ -182,5 +155,3 @@ func DeletePost(c *gin.Context) {
 		"message": "Post Deleted successfully",
 	})
 }
-
-//read all posts

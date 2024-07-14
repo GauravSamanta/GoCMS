@@ -41,7 +41,6 @@ func Login(c *gin.Context) {
 	}
 
 	// take the password and hash it and compare it to the password in the database
-
 	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(body.Password))
 
 	if err != nil {
@@ -50,22 +49,9 @@ func Login(c *gin.Context) {
 		})
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"message": "Logged in",
-	})
-
-	// like this we can redirect accordingly
-	if user.RoleID == 1 {
-		c.Redirect(http.StatusMovedPermanently, "/admin")
-	} else {
-		c.Redirect(http.StatusMovedPermanently, "/post")
-	}
-
 	//set cookies and jwt token
 	services.JwtToken(c, user)
 
-	c.Redirect(http.StatusMovedPermanently, "/post")
-	// render.Render(c, 200, views.Contact())
 }
 
 func Register(c *gin.Context) {
@@ -105,6 +91,6 @@ func Register(c *gin.Context) {
 		})
 		return
 	}
-
-	c.JSON(http.StatusOK, gin.H{})
+	// http.Redirect(c.Writer, c.Request, "/", http.StatusSeeOther)
+	// c.Redirect(http.StatusSeeOther, "http://localhost:8080/")
 }
