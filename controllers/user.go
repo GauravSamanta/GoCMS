@@ -5,18 +5,17 @@ import (
 
 	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
 	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
+	"github.com/Hrishikesh-Panigrahi/GoCMS/render"
 	"github.com/Hrishikesh-Panigrahi/GoCMS/services"
 
-	// "github.com/Hrishikesh-Panigrahi/GoCMS/render"
-	// views "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Contact"
-
-	// views "github.com/Hrishikesh-Panigrahi/GoCMS/templates/user"
-	// "fmt"
+	views "github.com/Hrishikesh-Panigrahi/GoCMS/templates/index"
 	"github.com/gin-gonic/gin"
-	"golang.org/x/crypto/bcrypt"
 )
 
 func Login(c *gin.Context) {
+	if c.Request.Method == "GET" {
+		render.Render(c, http.StatusOK, views.Index())
+	}
 	var body struct {
 		Email    string
 		Password string
@@ -40,14 +39,7 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	// take the password and hash it and compare it to the password in the database
-	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(body.Password))
-
-	if err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{
-			"message": "Invalid password",
-		})
-	}
+	ValidatePassword(user.Password, body.Password, c)
 
 	//set cookies and jwt token
 	services.JwtToken(c, user)
@@ -56,6 +48,9 @@ func Login(c *gin.Context) {
 }
 
 func Register(c *gin.Context) {
+	if c.Request.Method == "GET" {
+		render.Render(c, http.StatusOK, views.Registration())
+	}
 	var body struct {
 		Email    string
 		Password string
@@ -69,18 +64,9 @@ func Register(c *gin.Context) {
 		return
 	}
 
-	hash, err := bcrypt.GenerateFromPassword([]byte(body.Password), bcrypt.DefaultCost)
-
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": "Error while hashing the password",
-		})
-		return
-	}
-
 	user := models.User{
 		Email:    body.Email,
-		Password: string(hash),
+		Password: body.Password,
 		RoleID:   body.Role_ID,
 	}
 
@@ -92,6 +78,6 @@ func Register(c *gin.Context) {
 		})
 		return
 	}
-	// http.Redirect(c.Writer, c.Request, "/", http.StatusSeeOther)
-	// c.Redirect(http.StatusSeeOther, "http://localhost:8080/")
+
+	// c.Redirect(http.StatusSeeOther, "http://localhost:8080/user/post")
 }

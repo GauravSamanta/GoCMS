@@ -3,24 +3,20 @@ package models
 import (
 	"strings"
 
-	"github.com/gomarkdown/markdown"
-	"github.com/gomarkdown/markdown/html"
-	"github.com/gomarkdown/markdown/parser"
+	"github.com/rs/zerolog/log"
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
 
-func (p *Post) ThisHadTOBeAfterCreate(tx *gorm.DB) (err error) {
-	// Assuming you have a method to get the current user and an image ID
-	userID := GetCurrentUserID()
+func (u *User) BeforeSave(tx *gorm.DB) (err error) {
+	hash, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
 
-	link := UserPostLink{
-		UserID: userID,
-		PostID: p.ID,
+	if err != nil {
+		log.Error().Msgf("Error hashing password for user %v: %v", u.Email, err)
+		return
 	}
 
-	if err := tx.Create(&link).Error; err != nil {
-		return err
-	}
+	u.Password = string(hash)
 
 	return nil
 }
@@ -29,24 +25,9 @@ func (p *Post) ThisHadTOBeAfterCreate(tx *gorm.DB) (err error) {
 func (p *Post) FormatAndTruncate() {
 	p.FormattedDate = p.CreatedAt.Format("02 January 2006")
 	p.Title = strings.ToUpper(p.Title)
-	p.Content = string(MdToHTML([]byte(p.Content)))
 	if len(p.Description) > 100 {
 		p.Description = FirstN2(p.Description, 100, "....")
 	}
-}
-
-func MdToHTML(md []byte) []byte {
-	// create markdown parser with extensions
-	extensions := parser.CommonExtensions | parser.AutoHeadingIDs | parser.NoEmptyLineBeforeBlock
-	p := parser.NewWithExtensions(extensions)
-	doc := p.Parse(md)
-
-	// create HTML renderer with extensions
-	htmlFlags := html.CommonFlags | html.HrefTargetBlank
-	opts := html.RendererOptions{Flags: htmlFlags}
-	renderer := html.NewRenderer(opts)
-
-	return markdown.Render(doc, renderer)
 }
 
 func FirstN2(s string, n int, suffix string) string {

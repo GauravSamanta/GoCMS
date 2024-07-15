@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	models "github.com/Hrishikesh-Panigrahi/GoCMS/models"
+	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
 	"github.com/joho/godotenv"
 )
 
@@ -25,7 +25,7 @@ func SyncDB() {
 // func seedData() {
 // 	roles := []models.UserPostImageLink{{UserID: 26, PostID: 1, ImageID:1}, {UserID: 27, PostID: 2, ImageID:2}}
 // 	// user := []models.User{{Name: "blah", Email: "blah", Password: "blah", RoleID: 1}}
-	
+
 // 	DB.Save(&roles)
 // 	// DB.Save(&user)
 // }

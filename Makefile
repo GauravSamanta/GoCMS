@@ -1,16 +1,18 @@
 # Define variables
-AIR_CMD := air
-GO_CMD := go
-TEMPL_CMD := templ
+GOCMD=go
+TEMPL=templ
+BUILD_DIR=./tmp
+BINARY_NAME=main.exe
 
 all: build
 
-build:
-	$(TEMPL_CMD) generate
-    $(GO_CMD) build -o ./tmp/main.exe .
 
+build: 
+	$(TEMPL) generate
+	$(GOCMD) build -v -o $(BUILD_DIR)/$(BINARY_NAME) .
+	
 clean:
-    rm -f main
+	$(GOCMD) clean
+	rm -rf $(BUILD_DIR)
 
 .PHONY: all build test clean
-    

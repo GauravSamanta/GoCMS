@@ -24,7 +24,7 @@ func main() {
 	print("Server is running on port 8080")
 	r.Static("/static", "./static")
 
-	r.GET("/", controllers.Home)
+	r.GET("/", controllers.LoginPage)
 	r.GET("/register", controllers.RegisterPage)
 
 	r.POST("/auth/user/login", controllers.Login)
@@ -36,10 +36,15 @@ func main() {
 	r.PUT("/post", controllers.AdminUpdatePost)
 	r.DELETE("/post", controllers.AdminDeletePost)
 
+	r.GET("/admin/users", controllers.GetUsers)
+
 	// for user
-	r.GET("/user/post/", services.AuthMiddleware,controllers.GetPosts)
+	r.GET("/user/post/", services.AuthMiddleware, controllers.GetPosts)
 	r.GET("/user/post/:id", services.AuthMiddleware, controllers.GetPost)
+
 	r.POST("/user/create/post", services.AuthMiddleware, controllers.CreatePost)
+	r.GET("/user/create/post", services.AuthMiddleware, controllers.CreatePost)
+
 	r.PUT("/user/post/:id", services.AuthMiddleware, controllers.UpdatePost)
 	r.DELETE("/user/post/:id", services.AuthMiddleware, controllers.DeletePost)
 

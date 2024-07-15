@@ -10,11 +10,29 @@ import (
 	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
 	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
 	"github.com/Hrishikesh-Panigrahi/GoCMS/render"
+	view404 "github.com/Hrishikesh-Panigrahi/GoCMS/templates/404"
 	postview "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Posts"
+	"github.com/gomarkdown/markdown"
+	"github.com/gomarkdown/markdown/html"
+	"github.com/gomarkdown/markdown/parser"
 	"github.com/rs/zerolog/log"
 
 	"github.com/gin-gonic/gin"
 )
+
+func mdToHTML(md []byte) []byte {
+	// create markdown parser with extensions
+	extensions := parser.CommonExtensions | parser.AutoHeadingIDs | parser.NoEmptyLineBeforeBlock
+	p := parser.NewWithExtensions(extensions)
+	doc := p.Parse(md)
+
+	// create HTML renderer with extensions
+	htmlFlags := html.CommonFlags | html.HrefTargetBlank
+	opts := html.RendererOptions{Flags: htmlFlags}
+	renderer := html.NewRenderer(opts)
+
+	return markdown.Render(doc, renderer)
+}
 
 func GetPosts(c *gin.Context) {
 	var posts []models.UserPostLink
@@ -46,22 +64,21 @@ func GetPost(c *gin.Context) {
 
 	result := connections.DB.First(&post, id)
 	if result.Error != nil {
-		c.HTML(http.StatusNotFound, "404.html", gin.H{
-			"Title": "404 Post not found",
-			"error": "Post not found",
-		})
+		render.Render(c, http.StatusNotFound, view404.Page404("Post not found"))
+		
 	}
 
-	// post.FormattedDate = post.CreatedAt.Format("02 January 2006")
-	// post.Title = strings.ToUpper(post.Title)
-
-	// post.Content = string(models.MdToHTML([]byte(post.Content)))
-
-	render.Render(c, http.StatusOK, postview.Singlepost(post.Title, post.Description, post.Content))
+	content := string(mdToHTML([]byte(post.Content)))
+	render.Render(c, http.StatusOK, postview.Singlepost(post.Title, post.Description, content))
 }
 
 // create post
 func CreatePost(c *gin.Context) {
+	if c.Request.Method == "GET" {
+		render.Render(c, http.StatusOK, postview.CreatePost())
+		return
+	}
+
 	image_path := ImageUpload(c)
 
 	var postbody struct {

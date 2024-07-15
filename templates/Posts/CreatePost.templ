@@ -14,7 +14,7 @@ templ CreatePost() {
 			<div id="postForm" class="min-h-screen flex items-center justify-center p-4">
 				<div class="max-w-screen-lg bg-white rounded-lg shadow-lg p-8 md:p-12 mt-8 mb-8 w-full">
 					<h2 class="text-3xl font-bold mb-6 text-center">Submit a Post</h2>
-					<form action="#" method="POST" hx-post="/user/create/post" hx-target="#postForm">
+					<form action="#" method="POST" enctype="multipart/form-data" hx-encoding="multipart/form-data" hx-post="/user/create/post" hx-target="#postForm">
 						<div class="mb-4">
 							<label for="title" class="block text-gray-700 font-bold mb-2">Title</label>
 							<input type="text" id="title" name="Title" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required/>
@@ -42,7 +42,7 @@ templ CreatePost() {
 						</div>
 						<div class="mb-6">
 							<label for="image" class="block text-gray-700 font-bold mb-2">Upload Image</label>
-							<input type="file" id="image" name="Image" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+							<input type="file" id="file" name="file" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"/>
 						</div>
 						<div class="text-center">
 							<button type="submit" class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">Submit Post</button>
@@ -50,6 +50,11 @@ templ CreatePost() {
 					</form>
 				</div>
 			</div>
+			// <script>
+			// 	document.body.addEventListener('htmx:configRequest', (event) => {
+			// 	event.detail.headers['Content-Type'] = 'multipart/form-data; boundary=<calculated when request is sent>';
+			// 	});
+			// </script>
 		</body>
 	</html>
 }

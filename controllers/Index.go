@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Home(c *gin.Context) {
+func LoginPage(c *gin.Context) {
 	render.Render(c, http.StatusOK, views.Index())
 }
 

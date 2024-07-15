@@ -3,13 +3,12 @@ testdata_dir = "testdata"
 tmp_dir = "tmp"
 
 [build]
+  cmd = "make build"
   args_bin = []
   bin = "tmp\\main.exe"
-  
-  cmd = "templ generate && go build -o ./tmp/main.exe ."
   delay = 1000
   exclude_dir = ["assets", "tmp", "vendor", "testdata"]
-  exclude_file = [air.toml]
+  exclude_file = ['air.toml']
   exclude_regex = ["_templ.go"]
   exclude_unchanged = false
   follow_symlink = false
