@@ -23,7 +23,7 @@ func ContactMessage(c *gin.Context) {
 
 	_, err := mail.ParseAddress(email)
 	if err != nil {
-		render.Render(c, http.StatusBadRequest, Processedviews.Failure("Failure in Parsing Email Address", name, err.Error()))
+		render.Render(c, http.StatusBadRequest, Processedviews.Failure("Failure in Parsing Email Address", err.Error()))
 		return
 	}
 

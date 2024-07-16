@@ -18,6 +18,7 @@ func adminRoutes(superRoute *gin.RouterGroup) {
 		adminUserRouts := AdminRoutes.Group("/user")
 		{
 			adminUserRouts.POST("/create", controllers.CreateUser)
+			adminUserRouts.POST("/update-password/:id", controllers.UpdatePassword)
 			adminUserRouts.PUT("/:id", controllers.UpdateUser)
 			adminUserRouts.DELETE("/:id", controllers.DeleteUser)
 		}
@@ -33,6 +34,7 @@ func adminRoutes(superRoute *gin.RouterGroup) {
 			adminUserGETRouts.GET("/:id", controllers.GetUser)
 			adminUserGETRouts.GET("/create", controllers.CreateUser)
 			adminUserGETRouts.GET("/update/:id", controllers.UpdateUser)
+			adminUserGETRouts.GET("/update-password/:id", controllers.UpdatePassword)
 		}	
 
 		adminPostGETRouts := AdminFormRoutes.Group("/post")

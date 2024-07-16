@@ -41,13 +41,26 @@ func CreateUser(c *gin.Context) {
 	result := connections.DB.Create(&user)
 
 	if result.Error != nil {
-		render.Render(c, http.StatusInternalServerError, processedviews.Failure("Error while creating the user", "user not created", result.Error.Error()))
+		render.Render(c, http.StatusInternalServerError, processedviews.Failure("Error while creating the user", result.Error.Error()))
 	}
 	render.Render(c, http.StatusInternalServerError, processedviews.Success("User Created Successfully", "", "", ""))
 }
 
 func DeleteUser(c *gin.Context) {
-	fmt.Println("Delete User")
+	id := c.Param("id")
+	var user models.User
+	result := connections.DB.First(&user, id)
+	if result.Error != nil {
+		render.Render(c, http.StatusNotFound, processedviews.Failure("Couldn't Find the user", result.Error.Error()))
+	}
+	name := user.Name
+	result = connections.DB.Delete(&user, id)
+
+	if result.Error != nil {
+		render.Render(c, http.StatusNotFound, processedviews.Failure("Couldn't delete the user", result.Error.Error()))
+	}
+
+	render.Render(c, http.StatusOK, processedviews.Success("User Deleted Successfully", name, "", ""))
 }
 
 func UpdateUser(c *gin.Context) {
@@ -69,7 +82,27 @@ func UpdateUser(c *gin.Context) {
 }
 
 func UpdatePassword(c *gin.Context) {
+	if c.Request.Method=="GET"{
+		render.Render(c, http.StatusOK, views.UpdatePassword())
+		return
+	}
+
+	id := c.Param("id")
+	var user models.User
+	result := connections.DB.First(&user, id)
 	
+	if result.Error != nil {
+		render.Render(c, http.StatusNotFound, processedviews.Failure("Couldn't Find the user", result.Error.Error()))
+	}
+
+	password := c.Request.FormValue("password")
+
+	user.Password = password
+	result = connections.DB.Save(&user)
+	if result.Error != nil {
+		render.Render(c, http.StatusInternalServerError, processedviews.Failure("Couldn't Save the password", result.Error.Error()))
+	}
+	render.Render(c, http.StatusOK, processedviews.Success("Password Updated Successfully", "", "", ""))
 }
 
 func GetUser(c *gin.Context) {
