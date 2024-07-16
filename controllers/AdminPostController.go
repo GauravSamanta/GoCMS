@@ -66,8 +66,8 @@ func AdminCreatePost(c *gin.Context) {
 
 // update post
 func AdminUpdatePost(c *gin.Context) {
+	ID := StringToUint(c.Param("id"))
 	var postbody struct {
-		ID          uint
 		Title       string
 		Description string
 		Content     string
@@ -80,7 +80,7 @@ func AdminUpdatePost(c *gin.Context) {
 		return
 	}
 
-	result := connections.DB.Save(&models.Post{ID: postbody.ID, Title: postbody.Title, Description: postbody.Description, Content: postbody.Content, UpdatedAt: time.Now()})
+	result := connections.DB.Save(&models.Post{ID: ID, Title: postbody.Title, Description: postbody.Description, Content: postbody.Content, UpdatedAt: time.Now()})
 
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -96,18 +96,10 @@ func AdminUpdatePost(c *gin.Context) {
 
 // delete post
 func AdminDeletePost(c *gin.Context) {
-	var postbody struct {
-		ID uint
-	}
+	ID := StringToUint(c.Param("id"))
+	
 
-	if c.Bind(&postbody) != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Invalid input",
-		})
-		return
-	}
-
-	result := connections.DB.Delete(&models.Post{}, postbody.ID)
+	result := connections.DB.Delete(&models.Post{}, ID)
 
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{

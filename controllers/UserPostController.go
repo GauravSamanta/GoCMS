@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	// "errors"
 	"fmt"
 	"net/http"
 	"os"
@@ -12,6 +11,7 @@ import (
 	"github.com/Hrishikesh-Panigrahi/GoCMS/render"
 	view404 "github.com/Hrishikesh-Panigrahi/GoCMS/templates/404"
 	postview "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Posts"
+	processedviews "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Processed"
 	"github.com/gomarkdown/markdown"
 	"github.com/gomarkdown/markdown/html"
 	"github.com/gomarkdown/markdown/parser"
@@ -39,10 +39,7 @@ func GetPosts(c *gin.Context) {
 
 	postresult := connections.DB.Find(&posts)
 	if postresult.Error != nil {
-		c.HTML(http.StatusNotFound, "404.html", gin.H{
-			"Title": "404 Posts not found",
-			"error": "Posts not found",
-		})
+		render.Render(c, http.StatusInternalServerError, view404.Page404("Posts not found"))
 	}
 
 	result := connections.DB.Preload("User").Preload("Post").Find(&posts)
@@ -65,7 +62,7 @@ func GetPost(c *gin.Context) {
 	result := connections.DB.First(&post, id)
 	if result.Error != nil {
 		render.Render(c, http.StatusNotFound, view404.Page404("Post not found"))
-		
+
 	}
 
 	content := string(mdToHTML([]byte(post.Content)))
@@ -123,10 +120,7 @@ func CreatePost(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"message": "Post created successfully",
-		"result":  post,
-	})
+	render.Render(c, http.StatusOK, processedviews.Success("Post Created Successfully", "", "", ""))
 
 }
 
@@ -167,18 +161,9 @@ func UpdatePost(c *gin.Context) {
 
 // delete post
 func DeletePost(c *gin.Context) {
-	var postbody struct {
-		ID uint
-	}
+	ID := StringToUint(c.Param("id"))
 
-	if c.Bind(&postbody) != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Invalid input",
-		})
-		return
-	}
-
-	image := GetImage(c, postbody.ID)
+	image := GetImage(c, ID)
 
 	err := os.Remove(image.Path)
 	if err != nil {
@@ -186,7 +171,7 @@ func DeletePost(c *gin.Context) {
 		// No return because we have to remove the database entry nonetheless.
 	}
 
-	result := connections.DB.Delete(&models.Post{}, postbody.ID)
+	result := connections.DB.Delete(&models.Post{}, ID)
 
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{

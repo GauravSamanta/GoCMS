@@ -6,6 +6,7 @@ import (
 
 	"github.com/Hrishikesh-Panigrahi/GoCMS/render"
 	views "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Contact"
+	Processedviews "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Processed"
 	"github.com/gin-gonic/gin"
 )
 
@@ -22,9 +23,9 @@ func ContactMessage(c *gin.Context) {
 
 	_, err := mail.ParseAddress(email)
 	if err != nil {
-		render.Render(c, http.StatusBadRequest, views.Failure("Failure in Parsing Email Address", name, err.Error()))
+		render.Render(c, http.StatusBadRequest, Processedviews.Failure("Failure in Parsing Email Address", name, err.Error()))
 		return
 	}
 
-	render.Render(c, http.StatusAccepted, views.Success("Sucess", name, email, message))
+	render.Render(c, http.StatusAccepted, Processedviews.Success("Sucess", name, email, message))
 }

@@ -5,7 +5,7 @@ import (
 
 	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
 	"github.com/Hrishikesh-Panigrahi/GoCMS/controllers"
-	"github.com/Hrishikesh-Panigrahi/GoCMS/services"
+	"github.com/Hrishikesh-Panigrahi/GoCMS/routes"
 
 	"github.com/gin-gonic/gin"
 )
@@ -24,32 +24,16 @@ func main() {
 	print("Server is running on port 8080")
 	r.Static("/static", "./static")
 
-	r.GET("/", controllers.LoginPage)
-	r.GET("/register", controllers.RegisterPage)
+	// backend routes
+	router := r.Group("/")
+	routes.AddRoutes(router)
 
-	r.POST("/auth/user/login", controllers.Login)
-	r.POST("/auth/user/register", controllers.Register)
-
-	// for admin
-	r.GET("/post", controllers.AdminGetPosts)
-	r.POST("/post", controllers.AdminCreatePost)
-	r.PUT("/post", controllers.AdminUpdatePost)
-	r.DELETE("/post", controllers.AdminDeletePost)
-
-	r.GET("/admin/users", controllers.GetUsers)
-
-	// for user
-	r.GET("/user/post/", services.AuthMiddleware, controllers.GetPosts)
-	r.GET("/user/post/:id", services.AuthMiddleware, controllers.GetPost)
-
-	r.POST("/user/create/post", services.AuthMiddleware, controllers.CreatePost)
-	r.GET("/user/create/post", services.AuthMiddleware, controllers.CreatePost)
-
-	r.PUT("/user/post/:id", services.AuthMiddleware, controllers.UpdatePost)
-	r.DELETE("/user/post/:id", services.AuthMiddleware, controllers.DeletePost)
-
+	// sort these routes as well
 	r.GET("/contact", controllers.ContactUs)
 	r.POST("/contactsucess", controllers.ContactMessage)
+
+	r.GET("/", controllers.LoginPage)
+	r.GET("/register", controllers.RegisterPage)
 
 	r.Run()
 }

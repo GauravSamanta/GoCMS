@@ -43,8 +43,7 @@ func Login(c *gin.Context) {
 
 	//set cookies and jwt token
 	services.JwtToken(c, user)
-	c.Redirect(http.StatusSeeOther, "http://localhost:8080/user/post")
-
+	// c.Redirect(http.StatusSeeOther, "http://localhost:8080/user/post")
 }
 
 func Register(c *gin.Context) {
