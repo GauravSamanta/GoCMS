@@ -30,6 +30,7 @@ func adminRoutes(superRoute *gin.RouterGroup) {
 		adminUserGETRouts := AdminFormRoutes.Group("/user")
 		{
 			adminUserGETRouts.GET("/", controllers.GetUsers)
+			adminUserGETRouts.GET("/:id", controllers.GetUser)
 			adminUserGETRouts.GET("/create", controllers.CreateUser)
 			adminUserGETRouts.GET("/update/:id", controllers.UpdateUser)
 		}	

@@ -462,5 +462,80 @@ templ EditUser(user models.User) {
 }
 
 templ GetUser(user models.User) {
-	{ user.Name }
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<title>User Profile</title>
+			<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+		</head>
+		<body class="bg-gray-100">
+			<div class="container mx-auto mt-8">
+				<div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+					<div
+						class="bg-cover bg-center h-56"
+						style="background-image: url('https://img.freepik.com/free-vector/abstract-modern-banner-with-arrow-style-shape_1017-33899.jpg?w=1380&t=st=1721132606~exp=1721133206~hmac=20ead8f7d6d19f423aebe9607453921cb216b95be4c6469b81d9b1de7b32e35b')"
+					></div>
+					<div class="p-4">
+						<div class="text-center">
+							<img
+								class="h-32 w-32 rounded-full mx-auto border-4 border-white -mt-16"
+								src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqkUYrITWyI8OhPNDHoCDUjGjhg8w10_HRqg&s"
+								alt="Profile Picture"
+							/>
+							<h2 class="text-2xl font-semibold mt-2">{ user.Name }</h2>
+							<p class="text-gray-600"></p>
+							<p class="text-gray-500">{ user.Role.Description }</p>
+							<p class="text-gray-500">Last Updated: { TimeToString(user.UpdatedAt) }</p>
+						</div>
+						<div class="mt-4">
+							<h3 class="text-lg font-medium">About Me</h3>
+							<p class="mt-2 text-gray-600">
+								Lorem Ipsum is simply dummy text of the printing and typesetting
+								industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an
+								unknown printer took a galley of type and scrambled it to make a type specimen book. It has
+								survived not only five centuries, but also the leap into electronic typesetting, remaining
+								essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets
+								containing Lorem Ipsum passages, and more recently with desktop
+							</p>
+						</div>
+						<div class="mt-4">
+							<h3 class="text-lg font-medium">Contact Information</h3>
+							<ul class="mt-2 text-gray-600">
+								<li><strong>Email:</strong> { user.Email } </li>
+								<li><strong>Phone:</strong> 1342536457</li>
+								<li><strong>Location:</strong> mumbai</li>
+							</ul>
+						</div>
+						<div class="mt-4 text-center">
+							<button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Edit Profile</button>
+						</div>
+					</div>
+				</div>
+				<div class="container mx-auto mt-8">
+					<div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+						<div class="p-4">
+							<h3 class="text-lg font-medium mb-4">My Posts</h3>
+							<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+								<div class="bg-white rounded-lg shadow-md overflow-hidden">
+									<img src="https://tinyurl.com/4d7593fm" alt="Post Image" class="w-full h-48 object-cover"/>
+									<div class="p-4">
+										<h3 class="text-blue-500 text-xs font-bold uppercase">Date</h3>
+										<h1 class="text-xl font-bold mt-2">Title</h1>
+										<p class="mt-2 text-gray-700">.Description </p>
+										<p class="text-sm text-gray-500 mt-1">Category:  .Category </p>
+										<div class="mt-2">
+											<span class="inline-block bg-blue-200 text-blue-800 text-xs px-2 py-1 rounded-full mr-2">tages </span>
+										</div>
+										<a href="" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring" target="_self">Read More</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</body>
+	</html>
 }
