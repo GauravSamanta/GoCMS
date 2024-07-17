@@ -52,12 +52,14 @@ func DeleteUser(c *gin.Context) {
 	result := connections.DB.First(&user, id)
 	if result.Error != nil {
 		render.Render(c, http.StatusNotFound, processedviews.Failure("Couldn't Find the user", result.Error.Error()))
+		return
 	}
 	name := user.Name
-	result = connections.DB.Delete(&user, id)
+	result = connections.DB.Unscoped().Delete(&user, id)
 
 	if result.Error != nil {
 		render.Render(c, http.StatusNotFound, processedviews.Failure("Couldn't delete the user", result.Error.Error()))
+		return
 	}
 
 	render.Render(c, http.StatusOK, processedviews.Success("User Deleted Successfully", name, "", ""))
@@ -70,19 +72,41 @@ func UpdateUser(c *gin.Context) {
 		result := connections.DB.First(&user, id)
 		if result.Error != nil {
 			render.Render(c, http.StatusNotFound, view404.Page404("User not found"))
+			return
 		}
 		render.Render(c, http.StatusOK, views.EditUser(user))
+		return
 	}
 
 	if c.Request.Method == "PUT" {
+		id := c.Param("id")
+		var user models.User
+		result := connections.DB.First(&user, id)
+		if result.Error != nil {
+			render.Render(c, http.StatusNotFound, processedviews.Failure("Couldn't Find the user", result.Error.Error()))
+			return
+		}
 		name := c.Request.FormValue("name")
-		fmt.Println(name)
+		email := c.Request.FormValue("email")
+		Role_ID := c.Request.FormValue("RoleID")
+
+		fmt.Print(user.Email)
+
+		fmt.Print(name, email, Role_ID)
+
+		user.Name = name
+		user.Email = email
+		user.RoleID = StringToUint(Role_ID)
+		connections.DB.Save(&user)
+
+		render.Render(c, http.StatusOK, processedviews.Success("User Updated Successfully", "", "", ""))
+		return
 	}
 
 }
 
 func UpdatePassword(c *gin.Context) {
-	if c.Request.Method=="GET"{
+	if c.Request.Method == "GET" {
 		render.Render(c, http.StatusOK, views.UpdatePassword())
 		return
 	}
@@ -90,9 +114,10 @@ func UpdatePassword(c *gin.Context) {
 	id := c.Param("id")
 	var user models.User
 	result := connections.DB.First(&user, id)
-	
+
 	if result.Error != nil {
 		render.Render(c, http.StatusNotFound, processedviews.Failure("Couldn't Find the user", result.Error.Error()))
+		return
 	}
 
 	password := c.Request.FormValue("password")
@@ -101,6 +126,7 @@ func UpdatePassword(c *gin.Context) {
 	result = connections.DB.Save(&user)
 	if result.Error != nil {
 		render.Render(c, http.StatusInternalServerError, processedviews.Failure("Couldn't Save the password", result.Error.Error()))
+		return
 	}
 	render.Render(c, http.StatusOK, processedviews.Success("Password Updated Successfully", "", "", ""))
 }
@@ -111,6 +137,7 @@ func GetUser(c *gin.Context) {
 	result := connections.DB.First(&user, id)
 	if result.Error != nil {
 		render.Render(c, http.StatusNotFound, view404.Page404("User not found"))
+		return
 	}
 	render.Render(c, http.StatusOK, views.GetUser(user))
 }
