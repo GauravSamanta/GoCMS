@@ -56,7 +56,10 @@ func GetPosts(c *gin.Context) {
 	for i := 0; i < len(posts); i++ {
 		posts[i].Post.FormatAndTruncate()
 	}
-	render.Render(c, http.StatusOK, postview.Posts(posts, user))
+
+	latestPost := getLatestPostByTime(posts)
+	secondLastestPost := getSecondLatestPostByTime(posts, latestPost)
+	render.Render(c, http.StatusOK, postview.Posts(posts, user, latestPost, secondLastestPost))
 }
 
 func GetPost(c *gin.Context) {

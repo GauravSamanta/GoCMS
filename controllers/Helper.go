@@ -31,3 +31,25 @@ func StringToUint(s string) uint {
 	i, _ := strconv.Atoi(s)
 	return uint(i)
 }
+
+var LatestPost models.UserPostLink
+
+func getLatestPostByTime(posts []models.UserPostLink) models.UserPostLink {
+	for _, post := range posts {
+		if post.Post.CreatedAt.After(LatestPost.Post.CreatedAt) {
+			LatestPost = post
+		}
+	}
+	return LatestPost
+}
+
+var SecondLatestPost models.UserPostLink
+
+func getSecondLatestPostByTime(posts []models.UserPostLink, lastestPost models.UserPostLink) models.UserPostLink {
+	for _, post := range posts {
+		if post.Post.CreatedAt.After(SecondLatestPost.Post.CreatedAt) && post.Post.CreatedAt.Before(lastestPost.Post.CreatedAt) {
+			SecondLatestPost = post
+		}
+	}
+	return SecondLatestPost
+}
