@@ -1,4 +1,4 @@
-package Middleware
+package middleware
 
 import (
 	"fmt"
@@ -46,7 +46,8 @@ func AuthMiddleware(c *gin.Context) {
 			c.AbortWithStatus(http.StatusUnauthorized)
 		}
 
-		c.Set("user", user)
+		c.Set("userID", user.ID)
+
 		c.Next()
 	} else {
 		fmt.Println(err)

@@ -32,8 +32,5 @@ func main() {
 	r.GET("/contact", controllers.ContactUs)
 	r.POST("/contactsucess", controllers.ContactMessage)
 
-	r.GET("/", controllers.LoginPage)
-	r.GET("/register", controllers.RegisterPage)
-
 	r.Run()
 }

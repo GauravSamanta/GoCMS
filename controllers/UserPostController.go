@@ -35,6 +35,11 @@ func mdToHTML(md []byte) []byte {
 }
 
 func GetPosts(c *gin.Context) {
+	// get the current logged in user
+	userID, _ := c.Get("userID")
+	var user models.User
+	connections.DB.First(&user, userID)
+
 	var posts []models.UserPostLink
 
 	postresult := connections.DB.Find(&posts)
@@ -51,7 +56,7 @@ func GetPosts(c *gin.Context) {
 	for i := 0; i < len(posts); i++ {
 		posts[i].Post.FormatAndTruncate()
 	}
-	render.Render(c, http.StatusOK, postview.Posts(posts))
+	render.Render(c, http.StatusOK, postview.Posts(posts, user))
 }
 
 func GetPost(c *gin.Context) {

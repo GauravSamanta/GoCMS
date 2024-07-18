@@ -18,32 +18,35 @@ func CreateUser(c *gin.Context) {
 		render.Render(c, http.StatusOK, views.CreateUser())
 		return
 	}
+	if c.Request.Method == "POST" {
+		var userbody struct {
+			Name     string
+			Email    string
+			Password string
+			Role_ID  uint
+		}
+		if c.Bind(&userbody) != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"message": "Invalid input",
+			})
+			return
+		}
 
-	var userbody struct {
-		Name     string
-		Email    string
-		Password string
-		Role_ID  uint
-	}
-	if c.Bind(&userbody) != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Invalid input",
-		})
-		return
+		user := models.User{
+			Name:     userbody.Name,
+			Email:    userbody.Email,
+			Password: userbody.Password,
+			RoleID:   userbody.Role_ID,
+		}
+
+		result := connections.DB.Create(&user)
+
+		if result.Error != nil {
+			render.Render(c, http.StatusInternalServerError, processedviews.Failure("Error while creating the user", result.Error.Error()))
+		}
+		render.Render(c, http.StatusInternalServerError, processedviews.Success("User Created Successfully", "", "", ""))
 	}
 
-	user := models.User{
-		Email:    userbody.Email,
-		Password: userbody.Password,
-		RoleID:   userbody.Role_ID,
-	}
-
-	result := connections.DB.Create(&user)
-
-	if result.Error != nil {
-		render.Render(c, http.StatusInternalServerError, processedviews.Failure("Error while creating the user", result.Error.Error()))
-	}
-	render.Render(c, http.StatusInternalServerError, processedviews.Success("User Created Successfully", "", "", ""))
 }
 
 func DeleteUser(c *gin.Context) {

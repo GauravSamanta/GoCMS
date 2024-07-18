@@ -8,47 +8,50 @@ import (
 	"github.com/Hrishikesh-Panigrahi/GoCMS/render"
 	"github.com/Hrishikesh-Panigrahi/GoCMS/services"
 
-	views "github.com/Hrishikesh-Panigrahi/GoCMS/templates/index"
+	authViews "github.com/Hrishikesh-Panigrahi/GoCMS/templates/authentication"
 	"github.com/gin-gonic/gin"
 )
 
 func Login(c *gin.Context) {
 	if c.Request.Method == "GET" {
-		render.Render(c, http.StatusOK, views.Index())
+		render.Render(c, http.StatusOK, authViews.Index())
 	}
-	var body struct {
-		Email    string
-		Password string
+	if c.Request.Method == "POST" {
+		var body struct {
+			Email    string
+			Password string
+		}
+
+		if c.Bind(&body) != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"message": "Invalid input",
+			})
+			return
+		}
+
+		// find the user
+		var user models.User
+		connections.DB.First(&user, "email = ?", body.Email)
+
+		if user.ID == 0 {
+			c.JSON(http.StatusUnauthorized, gin.H{
+				"message": "Invalid credentials",
+			})
+			return
+		}
+
+		ValidatePassword(user.Password, body.Password, c)
+
+		//set cookies and jwt token
+		services.JwtToken(c, user)
+		// c.Redirect(http.StatusSeeOther, "http://localhost:8080/user/post")
 	}
 
-	if c.Bind(&body) != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Invalid input",
-		})
-		return
-	}
-
-	// find the user
-	var user models.User
-	connections.DB.First(&user, "email = ?", body.Email)
-
-	if user.ID == 0 {
-		c.JSON(http.StatusUnauthorized, gin.H{
-			"message": "Invalid credentials",
-		})
-		return
-	}
-
-	ValidatePassword(user.Password, body.Password, c)
-
-	//set cookies and jwt token
-	services.JwtToken(c, user)
-	// c.Redirect(http.StatusSeeOther, "http://localhost:8080/user/post")
 }
 
 func Register(c *gin.Context) {
 	if c.Request.Method == "GET" {
-		render.Render(c, http.StatusOK, views.Registration())
+		render.Render(c, http.StatusOK, authViews.Registration())
 	}
 	var body struct {
 		Email    string
