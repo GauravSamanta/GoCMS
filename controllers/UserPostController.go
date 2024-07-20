@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 	"os"
 	"time"
@@ -59,7 +58,24 @@ func GetPosts(c *gin.Context) {
 
 	latestPost := getLatestPostByTime(posts)
 	secondLastestPost := getSecondLatestPostByTime(posts, latestPost)
-	render.Render(c, http.StatusOK, postview.Posts(posts, user, latestPost, secondLastestPost))
+
+	for i := 0; i < len(posts); i++ {
+		for j := i + 1; j < len(posts); j++ {
+			if posts[i].Post.CreatedAt.Unix() < posts[j].Post.CreatedAt.Unix() {
+				posts[i], posts[j] = posts[j], posts[i]
+			}
+		}
+	}
+
+	var updatedPosts []models.UserPostLink
+	for i := 0; i < len(posts); i++ {
+		//remove the latest post and secondLastestPost from the list
+		if posts[i].Post.ID != latestPost.Post.ID && posts[i].Post.ID != secondLastestPost.Post.ID {
+			updatedPosts = append(updatedPosts, posts[i])
+		}
+	}
+
+	render.Render(c, http.StatusOK, postview.Posts(updatedPosts, user, latestPost, secondLastestPost))
 }
 
 func GetPost(c *gin.Context) {
@@ -83,52 +99,53 @@ func CreatePost(c *gin.Context) {
 		render.Render(c, http.StatusOK, postview.CreatePost())
 		return
 	}
+	
+	if c.Request.Method == "POST" {
+		image_path := PostImageUpload(c)
 
-	image_path := ImageUpload(c)
+		var postbody struct {
+			Title       string
+			Description string
+			Content     string
+			Category    string
+			Tags        string
+			Alt         string
+		}
 
-	var postbody struct {
-		Title       string
-		Description string
-		Content     string
-		Category    string
-		Tags        string
-		Alt         string
+		if c.Bind(&postbody) != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"message": "Invalid input",
+			})
+			return
+		}
+
+		userID, _ := c.Get("userID")
+		var user models.User
+		connections.DB.First(&user, userID)
+
+		post := models.Post{Title: postbody.Title, Description: postbody.Description, Content: postbody.Content,
+			Category: postbody.Category, Tags: postbody.Tags, Path: image_path, Alt: postbody.Alt, CreatedAt: time.Now(), UpdatedAt: time.Now()}
+
+		result := connections.DB.Create(&post)
+
+		if result.Error != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": "Error while creating the post",
+			})
+			return
+		}
+
+		result = connections.DB.Create(&models.UserPostLink{UserID: user.ID, PostID: post.ID})
+		if result.Error != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": "Error while creating the post",
+			})
+			return
+		}
+
+		render.Render(c, http.StatusOK, processedviews.Success("Post Created Successfully", "", "", ""))
+
 	}
-
-	if c.Bind(&postbody) != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Invalid input",
-		})
-		return
-	}
-
-	//get the user id from the token
-	user, _ := c.Get("user")
-	userobj := user.(models.User)
-
-	fmt.Println(userobj.ID)
-
-	post := models.Post{Title: postbody.Title, Description: postbody.Description, Content: postbody.Content,
-		Category: postbody.Category, Tags: postbody.Tags, Path: image_path, Alt: postbody.Alt, CreatedAt: time.Now(), UpdatedAt: time.Now()}
-
-	result := connections.DB.Create(&post)
-
-	if result.Error != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": "Error while creating the post",
-		})
-		return
-	}
-
-	result = connections.DB.Create(&models.UserPostLink{UserID: userobj.ID, PostID: post.ID})
-	if result.Error != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": "Error while creating the post",
-		})
-		return
-	}
-
-	render.Render(c, http.StatusOK, processedviews.Success("Post Created Successfully", "", "", ""))
 
 }
 

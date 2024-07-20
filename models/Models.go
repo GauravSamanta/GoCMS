@@ -7,12 +7,25 @@ import (
 
 type User struct {
 	gorm.Model
-	Name     string
-	Email    string `json:"email" gorm:"unique,not null"`
-	Password string
-	
-	RoleID   uint `gorm:"not null;DEFAULT:2" json:"role_id"`
-	Role     Role `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE,foreignKey:RoleID;" json:"-"`
+	Name           string
+	Email          string `json:"email" gorm:"unique,not null"`
+	UserName       string `json:"user_name" gorm:"unique,not null"`
+	Password       string
+	ProfileImgPath string   `json:"profile_img_path"`
+	Alt            string   `json:"alt"`
+	LocationID     uint     `gorm:"not null;DEFAULT:2" json:"location_id"`
+	Location       Location `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE,foreignKey:LocationID;" json:"location"`
+	Bio            string   `json:"bio"`
+	RoleID         uint     `gorm:"not null;DEFAULT:2" json:"role_id"`
+	Role           Role     `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE,foreignKey:RoleID;" json:"-"`
+}
+
+type Location struct {
+	ID          uint   `gorm:"primary_key" json:"id"`
+	CityName    string `gorm:"uniqueIndex:idx_first_second" json:"city_name"`
+	StateName   string `gorm:"uniqueIndex:idx_first_second" json:"state_name"`
+	CountryName string `gorm:"uniqueIndex:idx_first_second" json:"country_name"`
+	ZipCode     string `gorm:"uniqueIndex:idx_first_second" json:"zip_code"`
 }
 
 type Role struct {
@@ -23,7 +36,7 @@ type Role struct {
 }
 
 type Post struct {
-	ID            uint         `json:"id" gorm:"primaryKey;autoIncrement"`
+	ID            uint           `json:"id" gorm:"primaryKey;autoIncrement"`
 	Title         string         `json:"title" binding:"uppercase"`
 	Description   string         `json:"description"`
 	Content       string         `json:"content"`

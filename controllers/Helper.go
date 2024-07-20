@@ -40,6 +40,7 @@ func getLatestPostByTime(posts []models.UserPostLink) models.UserPostLink {
 			LatestPost = post
 		}
 	}
+
 	return LatestPost
 }
 

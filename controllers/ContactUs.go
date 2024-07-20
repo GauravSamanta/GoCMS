@@ -4,6 +4,8 @@ import (
 	"net/http"
 	"net/mail"
 
+	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
+	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
 	"github.com/Hrishikesh-Panigrahi/GoCMS/render"
 	views "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Contact"
 	Processedviews "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Processed"
@@ -11,7 +13,10 @@ import (
 )
 
 func ContactUs(c *gin.Context) {
-	render.Render(c, http.StatusOK, views.Contact())
+	userID, _ := c.Get("userID")
+	var user models.User
+	connections.DB.Find(&user, userID)
+	render.Render(c, http.StatusOK, views.Contact(user))
 }
 
 func ContactMessage(c *gin.Context) {

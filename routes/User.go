@@ -7,7 +7,7 @@ import (
 )
 
 func userRoutes(superRoute *gin.RouterGroup) {
-	UserRoutes := superRoute.Group("api/v1/user")
+	UserRoutes := superRoute.Group("/api/v1/user")
 	{
 		userPostRoutes := UserRoutes.Group("/post")
 		{
@@ -25,6 +25,11 @@ func userRoutes(superRoute *gin.RouterGroup) {
 			userPostFormRoutes.GET("/create", middleware.AuthMiddleware, controllers.CreatePost)
 			userPostFormRoutes.GET("/update/:id", middleware.AuthMiddleware, controllers.UpdatePost)
 			userPostFormRoutes.GET("/delete/:id", middleware.AuthMiddleware, controllers.DeletePost)
+		}
+
+		userProfleRoutes := UserFormRoutes.Group("/profile")
+		{
+			userProfleRoutes.GET("/:user_name", middleware.AuthMiddleware, controllers.GetProfile)
 		}
 	}
 }

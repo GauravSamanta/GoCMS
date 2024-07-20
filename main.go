@@ -23,6 +23,7 @@ func main() {
 	r.MaxMultipartMemory = 1
 	print("Server is running on port 8080")
 	r.Static("/static", "./static")
+	r.Static("/media", "./media")
 
 	// backend routes
 	router := r.Group("/")

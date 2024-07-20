@@ -1,8 +1,11 @@
 package views
 
-import views "github.com/Hrishikesh-Panigrahi/GoCMS/templates/index"
+import (
+	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
+	views "github.com/Hrishikesh-Panigrahi/GoCMS/templates/index"
+)
 
-templ Contact() {
+templ Contact(user models.User) {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
@@ -13,11 +16,7 @@ templ Contact() {
 			<title>Document</title>
 		</head>
 		<body class="bg-gray-100">
-			@views.Nav([]views.Link{
-				{Name: "Home", Href: "/"},
-				{Name: "About", Href: "/about"},
-				{Name: "Contact", Href: "/contact"},
-			})
+			@views.Nav(user)
 			<div class="min-h-screen flex items-center justify-center p-4 mt-18" id="form">
 				<div class="max-w-screen-lg bg-white rounded-lg shadow-lg p-8 md:p-12 mt-8 mb-8 w-full">
 					<h2 class="text-3xl font-bold mb-6 text-center">Contact Us</h2>

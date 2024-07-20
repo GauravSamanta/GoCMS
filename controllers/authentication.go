@@ -53,33 +53,50 @@ func Register(c *gin.Context) {
 	if c.Request.Method == "GET" {
 		render.Render(c, http.StatusOK, authViews.Registration())
 	}
-	var body struct {
-		Email    string
-		Password string
-		Role_ID  uint
+
+	if c.Request.Method == "POST" {
+		file, _, err := c.Request.FormFile("file")
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"message": "Invalid input",
+			})
+			return
+		}
+		defer file.Close()
+		var profileImagePath string
+
+		if file != nil {
+			profileImagePath = ProfileImageUpload(c)
+		}
+
+		var body struct {
+			Email    string
+			Password string
+			Role_ID  uint
+		}
+
+		if c.Bind(&body) != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"message": "Invalid input",
+			})
+			return
+		}
+
+		user := models.User{
+			Email:          body.Email,
+			Password:       body.Password,
+			ProfileImgPath: profileImagePath,
+			RoleID:         body.Role_ID,
+		}
+
+		result := connections.DB.Create(&user)
+
+		if result.Error != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": "Error while creating the user",
+			})
+			return
+		}
 	}
-
-	if c.Bind(&body) != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Invalid input",
-		})
-		return
-	}
-
-	user := models.User{
-		Email:    body.Email,
-		Password: body.Password,
-		RoleID:   body.Role_ID,
-	}
-
-	result := connections.DB.Create(&user)
-
-	if result.Error != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": "Error while creating the user",
-		})
-		return
-	}
-
 	// c.Redirect(http.StatusSeeOther, "http://localhost:8080/user/post")
 }

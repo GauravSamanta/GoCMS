@@ -40,13 +40,9 @@ templ Posts(posts []models.UserPostLink, user models.User, latestPost models.Use
 			<script src="/static/js/htmx.min.js"></script>
 		</head>
 		<body>
-			@views.Nav([]views.Link{
-				{Name: "Home", Href: "/"},
-				{Name: "About", Href: "/about"},
-				{Name: "Contact", Href: "/contact"},
-			})
+			@views.Nav(user)
 			<div class="max-w-screen-xl mx-auto">
-				<main style="margin-top: 3.5rem;">
+				<main style="margin-top: 2.5rem;">
 					<div class="block md:flex md:space-x-2 px-2 lg:p-0">
 					
 						<a class="mb-4 md:mb-0 w-full md:w-2/3 relative rounded inline-block" style="height: 24em;" href={ templ.URL("/user/post/" + fmt.Sprintf("%d", latestPost.Post.ID)) }>
@@ -55,7 +51,7 @@ templ Posts(posts []models.UserPostLink, user models.User, latestPost models.Use
 								style="background-image: linear-gradient(180deg,transparent,rgba(0,0,0,.7));"
 							></div>
 							<img
-								src="https://static.cricbuzz.com/a/img/v1/420x235/i1/c521008/god-had-different-plans-for-m.jpg"
+							     src={ latestPost.Post.Path }
 								class="absolute left-0 top-0 w-full h-full rounded z-0 object-cover"
 							/>
 							<div class="p-4 absolute bottom-0 left-0 z-20">
@@ -96,7 +92,7 @@ templ Posts(posts []models.UserPostLink, user models.User, latestPost models.Use
 								style="background-image: linear-gradient(180deg,transparent,rgba(0,0,0,.7));"
 							></div>
 							<img
-								src="https://static.cricbuzz.com/a/img/v1/420x235/i1/c521005/the-runs-that-stay-unmade.jpg"
+								src={ secondLatestPost.Post.Path }
 								class="absolute left-0 top-0 w-full h-full rounded z-0 object-cover"
 							/>
 							<div class="p-4 absolute bottom-0 left-0 z-20">
@@ -139,7 +135,7 @@ templ Posts(posts []models.UserPostLink, user models.User, latestPost models.Use
 							<a class="block rounded w-full lg:flex mb-10" href={ templ.URL("/user/post/" + fmt.Sprintf("%d", post.Post.ID)) }>
 								<div
 									class="h-48 lg:w-48 flex-none bg-cover text-center overflow-hidden opacity-75"
-									style="background-image: url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80')"
+									style="background-image: url('{ post.Post.Path }');"
 									title="deit is very important"
 								></div>
 								<div class="bg-white rounded px-4 flex flex-col justify-between leading-normal">
