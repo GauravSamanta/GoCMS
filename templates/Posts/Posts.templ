@@ -7,11 +7,15 @@ import (
 	"time"
 )
 
-func formatTime(t time.Time) string {
+func FormatTime(t time.Time) string {
 	duration := time.Since(t)
 
 	var formattedTime string
-	if duration.Hours() < 24 {
+	if duration.Minutes() < 1 {
+		formattedTime = "just now"
+	} else if duration.Hours() < 1 {
+		formattedTime = fmt.Sprintf("%.0f minutes ago", duration.Minutes())
+	} else if duration.Hours() < 24 {
 		formattedTime = fmt.Sprintf("%.0f hours ago", duration.Hours())
 	} else if duration.Hours() < 168 {
 		days := int(duration.Hours()) / 24
@@ -81,7 +85,7 @@ templ Posts(posts []models.UserPostLink, user models.User, latestPost models.Use
 									/>
 									<div>
 										<p class="font-semibold text-gray-200 text-sm">{ latestPost.User.Name } </p>
-										<p class="font-semibold text-gray-400 text-xs">{ formatTime(latestPost.Post.CreatedAt) } </p>
+										<p class="font-semibold text-gray-400 text-xs">{ FormatTime(latestPost.Post.CreatedAt) } </p>
 									</div>
 								</div>
 							</div>
@@ -122,7 +126,7 @@ templ Posts(posts []models.UserPostLink, user models.User, latestPost models.Use
 									/>
 									<div>
 										<p class="font-semibold text-gray-200 text-sm">{ secondLatestPost.User.Name } </p>
-										<p class="font-semibold text-gray-400 text-xs">{ formatTime(secondLatestPost.Post.CreatedAt) } </p>
+										<p class="font-semibold text-gray-400 text-xs">{ FormatTime(secondLatestPost.Post.CreatedAt) } </p>
 									</div>
 								</div>
 							</div>
@@ -154,7 +158,7 @@ templ Posts(posts []models.UserPostLink, user models.User, latestPost models.Use
 										/>
 										<div>
 											<p class="font-semibold text-gray-700 text-sm capitalize">{ post.User.Name } </p>
-											<p class="text-gray-600 text-xs">{ formatTime(post.Post.CreatedAt) } </p>
+											<p class="text-gray-600 text-xs">{ FormatTime(post.Post.CreatedAt) } </p>
 										</div>
 									</div>
 								</div>

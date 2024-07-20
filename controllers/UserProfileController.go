@@ -27,7 +27,7 @@ func GetProfile(c *gin.Context) {
 	render.Render(c, http.StatusOK, views.UserProfile(user, strconv.Itoa(len(userPostLink))))
 }
 
-func GetProfilePosts(c *gin.Context){
+func GetProfilePosts(c *gin.Context) {
 	id := c.Param("id")
 
 	var user models.User

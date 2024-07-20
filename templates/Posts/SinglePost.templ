@@ -10,11 +10,10 @@ templ Singlepost(Title string, Description string, Content string) {
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 			<title>Form</title>
 			<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
-			 <link href="https://cdnjs.cloudflare.com/ajax/libs/typography/0.16.19/typography.min.css" rel="stylesheet">
+			<link href="https://cdnjs.cloudflare.com/ajax/libs/typography/0.16.19/typography.min.css" rel="stylesheet"/>
 			<script src="/static/js/htmx.min.js"></script>
 		</head>
 		<body class="bg-gray-100 text-gray-900">
-
 			<div class="container mx-auto mt-8 p-4">
 				<div class="bg-white rounded-lg shadow-md overflow-hidden">
 					<img src="https://tinyurl.com/4d7593fm" alt="Post Image" class="w-full h-64 object-cover"/>
@@ -31,7 +30,6 @@ templ Singlepost(Title string, Description string, Content string) {
 					<a href={ templ.URL("/user/post/") } class="text-blue-500 hover:underline">← Back to Posts</a>
 				</div>
 			</div>
-			
 		</body>
 	</html>
 }

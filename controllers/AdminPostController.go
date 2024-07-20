@@ -57,11 +57,6 @@ func AdminCreatePost(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"message": "Post created successfully",
-		"result":  post,
-	})
-
 }
 
 // update post
@@ -89,15 +84,11 @@ func AdminUpdatePost(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"message": "Post updated successfully",
-	})
 }
 
 // delete post
 func AdminDeletePost(c *gin.Context) {
 	ID := StringToUint(c.Param("id"))
-	
 
 	result := connections.DB.Delete(&models.Post{}, ID)
 
@@ -107,8 +98,4 @@ func AdminDeletePost(c *gin.Context) {
 		})
 		return
 	}
-
-	c.JSON(http.StatusOK, gin.H{
-		"message": "Post Deleted successfully",
-	})
 }

@@ -11,27 +11,9 @@ import (
 	view404 "github.com/Hrishikesh-Panigrahi/GoCMS/templates/404"
 	postview "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Posts"
 	processedviews "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Processed"
-	"github.com/gomarkdown/markdown"
-	"github.com/gomarkdown/markdown/html"
-	"github.com/gomarkdown/markdown/parser"
 	"github.com/rs/zerolog/log"
-
 	"github.com/gin-gonic/gin"
 )
-
-func mdToHTML(md []byte) []byte {
-	// create markdown parser with extensions
-	extensions := parser.CommonExtensions | parser.AutoHeadingIDs | parser.NoEmptyLineBeforeBlock
-	p := parser.NewWithExtensions(extensions)
-	doc := p.Parse(md)
-
-	// create HTML renderer with extensions
-	htmlFlags := html.CommonFlags | html.HrefTargetBlank
-	opts := html.RendererOptions{Flags: htmlFlags}
-	renderer := html.NewRenderer(opts)
-
-	return markdown.Render(doc, renderer)
-}
 
 func GetPosts(c *gin.Context) {
 	// get the current logged in user
@@ -89,7 +71,7 @@ func GetPost(c *gin.Context) {
 
 	}
 
-	content := string(mdToHTML([]byte(post.Content)))
+	content := string(MdToHTML([]byte(post.Content)))
 	render.Render(c, http.StatusOK, postview.Singlepost(post.Title, post.Description, content))
 }
 
@@ -99,7 +81,7 @@ func CreatePost(c *gin.Context) {
 		render.Render(c, http.StatusOK, postview.CreatePost())
 		return
 	}
-	
+
 	if c.Request.Method == "POST" {
 		image_path := PostImageUpload(c)
 
@@ -142,11 +124,8 @@ func CreatePost(c *gin.Context) {
 			})
 			return
 		}
-
 		render.Render(c, http.StatusOK, processedviews.Success("Post Created Successfully", "", "", ""))
-
 	}
-
 }
 
 // update post
@@ -179,9 +158,6 @@ func UpdatePost(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"message": "Post updated successfully",
-	})
 }
 
 // delete post
@@ -205,7 +181,4 @@ func DeletePost(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"message": "Post Deleted successfully",
-	})
 }
