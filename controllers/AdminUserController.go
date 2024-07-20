@@ -19,11 +19,27 @@ func CreateUser(c *gin.Context) {
 		return
 	}
 	if c.Request.Method == "POST" {
+		file, _, err := c.Request.FormFile("file")
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"message": "Invalid input",
+			})
+			return
+		}
+		defer file.Close()
+		var profileImagePath string
+
+		if file != nil {
+			profileImagePath = ProfileImageUpload(c)
+		}
+
 		var userbody struct {
-			Name     string
-			Email    string
-			Password string
-			Role_ID  uint
+			Name       string
+			Email      string
+			Password   string
+			Role_ID    uint
+			Username   string
+			LocationID uint
 		}
 		if c.Bind(&userbody) != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
@@ -33,10 +49,13 @@ func CreateUser(c *gin.Context) {
 		}
 
 		user := models.User{
-			Name:     userbody.Name,
-			Email:    userbody.Email,
-			Password: userbody.Password,
-			RoleID:   userbody.Role_ID,
+			Name:           userbody.Name,
+			Email:          userbody.Email,
+			Password:       userbody.Password,
+			RoleID:         userbody.Role_ID,
+			UserName:       userbody.Username,
+			LocationID:     userbody.LocationID,
+			ProfileImgPath: profileImagePath,
 		}
 
 		result := connections.DB.Create(&user)
