@@ -3,6 +3,7 @@ package controllers
 import (
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
@@ -11,8 +12,8 @@ import (
 	view404 "github.com/Hrishikesh-Panigrahi/GoCMS/templates/404"
 	postview "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Posts"
 	processedviews "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Processed"
-	"github.com/rs/zerolog/log"
 	"github.com/gin-gonic/gin"
+	"github.com/rs/zerolog/log"
 )
 
 func GetPosts(c *gin.Context) {
@@ -61,18 +62,28 @@ func GetPosts(c *gin.Context) {
 }
 
 func GetPost(c *gin.Context) {
-	var post models.Post
+	if c.Request.Method == "GET" {
+		var post models.Post
 
-	id := c.Param("id")
+		id := c.Param("id")
 
-	result := connections.DB.First(&post, id)
-	if result.Error != nil {
-		render.Render(c, http.StatusNotFound, view404.Page404("Post not found"))
+		result := connections.DB.First(&post, id)
+		if result.Error != nil {
+			render.Render(c, http.StatusNotFound, view404.Page404("Post not found"))
 
+		}
+		content := string(MdToHTML([]byte(post.Content)))
+
+		var LinkUserComments []models.LinkUserPostComment
+		connections.DB.Preload("Comment").Preload("User").Where("post_id = ?", id).Find(&LinkUserComments)
+
+		render.Render(c, http.StatusOK, postview.Singlepost(post.Title, post.Description, content, strconv.Itoa(len(LinkUserComments)), LinkUserComments, int(post.ID)))
 	}
 
-	content := string(MdToHTML([]byte(post.Content)))
-	render.Render(c, http.StatusOK, postview.Singlepost(post.Title, post.Description, content))
+	if c.Request.Method == "POST" {
+		CreateComment(c)
+	}
+
 }
 
 // create post

@@ -14,6 +14,7 @@ func userRoutes(superRoute *gin.RouterGroup) {
 			userPostRoutes.POST("/create", controllers.CreatePost)
 			userPostRoutes.PUT("/:id", controllers.UpdatePost)
 			userPostRoutes.DELETE("/:id", controllers.DeletePost)
+			userPostRoutes.POST("/comment/:post_id", controllers.GetPost)
 		}
 	}
 	UserFormRoutes := superRoute.Group("/user")

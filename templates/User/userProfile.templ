@@ -1,6 +1,7 @@
 package views
 
 import "github.com/Hrishikesh-Panigrahi/GoCMS/models"
+import "fmt"
 
 templ UserProfile(user models.User, PostCount string) {
 	<!DOCTYPE html>
@@ -49,7 +50,7 @@ templ UserProfile(user models.User, PostCount string) {
 									<div class="w-full lg:w-4/12 px-4 lg:order-1">
 										<div class="flex justify-center py-4 lg:pt-4 pt-8">
 											<div class="mr-4 p-3 text-center">
-												<span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">{ PostCount }</span><span class="text-sm text-blueGray-400">Posts</span>
+												<span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">{ PostCount }</span><span class="text-sm text-blueGray-400"><a href={ templ.URL("/user/profile/"+ fmt.Sprintf("%d", user.ID)+"/posts") }>Posts</a></span>
 											</div>
 											<div class="lg:mr-4 p-3 text-center">
 												<span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">89</span><span class="text-sm text-blueGray-400">Comments</span>
@@ -65,12 +66,12 @@ templ UserProfile(user models.User, PostCount string) {
 										<i class="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
 										{ user.Location.CityName }, { user.Location.CountryName }
 									</div>
-									<div class="mb-2 text-blueGray-600 mt-10">
-										<i class="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i>Solution Manager - Creative Tim Officer
-									</div>
-									<div class="mb-2 text-blueGray-600">
-										<i class="fas fa-university mr-2 text-lg text-blueGray-400"></i>University of Computer Science
-									</div>
+									// <div class="mb-2 text-blueGray-600 mt-10">
+									// 	<i class="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i>Solution Manager - Creative Tim Officer
+									// </div>
+									// <div class="mb-2 text-blueGray-600">
+									// 	<i class="fas fa-university mr-2 text-lg text-blueGray-400"></i>University of Computer Science
+									// </div>
 								</div>
 								<div class="mt-10 py-10 border-t border-blueGray-200 text-center">
 									<div class="flex flex-wrap justify-center">
@@ -78,7 +79,7 @@ templ UserProfile(user models.User, PostCount string) {
 											<p class="mb-4 text-lg leading-relaxed text-blueGray-700">
 												{ user.Bio }
 											</p>
-											<a href="#pablo" class="font-normal text-pink-500">Show more</a>
+											
 										</div>
 									</div>
 								</div>
