@@ -1,9 +1,11 @@
 package views
 
-import "github.com/Hrishikesh-Panigrahi/GoCMS/models"
-import "fmt"
+import (
+	"fmt"
+	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
+)
 
-templ Singlepost(Title string, Description string, Content string, CommentLength string, comments []models.LinkUserPostComment, postID int) {
+templ Singlepost(post models.Post, Content string, CommentLength string, comments []models.LinkUserPostComment) {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
@@ -12,17 +14,29 @@ templ Singlepost(Title string, Description string, Content string, CommentLength
 			<title>Form</title>
 			<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
 			<link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css" rel="stylesheet"/>
+			<link href="/static/markdown.css" rel="stylesheet"/>
 			<script src="/static/js/htmx.min.js"></script>
+			<style>
+				/* Internal CSS for styling templ.Raw content */
+				.raw-content {
+					font-family: Arial, sans-serif;
+					color: #333;
+					background-color: #f9f9f9;
+					padding: 20px;
+					border: 1px solid #ddd;
+					border-radius: 5px;
+				}
+			</style>
 		</head>
 		<body class="bg-gray-100 text-gray-900">
 			<div class="container mx-auto mt-8 p-4">
 				<div class="bg-white rounded-lg shadow-md overflow-hidden">
-					<img src="https://tinyurl.com/4d7593fm" alt="Post Image" class="w-full h-64 object-cover"/>
+					<img src={ post.Path } alt="Post Image" class="w-full h-64 object-cover"/>
 					<div class="p-8">
 						<h3 class="text-blue-500 text-xs font-bold uppercase">today</h3>
-						<h1 class="text-3xl font-bold mt-2">{ Title }</h1>
-						<p class="mt-2 text-gray-700">{ Description }</p>
-						<div class="prose prose-lg mt-6">
+						<h1 class="text-3xl font-bold mt-2">{ post.Title }</h1>
+						<p class="mt-2 text-gray-700">{ post.Description }</p>
+						<div class="raw-content prose prose-lg mt-6">
 							@templ.Raw(Content)
 						</div>
 					</div>
@@ -31,13 +45,13 @@ templ Singlepost(Title string, Description string, Content string, CommentLength
 					<a href={ templ.URL("/user/post/") } class="text-blue-500 hover:underline">← Back to Posts</a>
 				</div>
 			</div>
-			@CommentSection(CommentLength, comments, postID)
+			@CommentSection(CommentLength, comments, post.ID)
 			<script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
 		</body>
 	</html>
 }
 
-templ CommentSection(CommentLength string, Comments []models.LinkUserPostComment, postID int) {
+templ CommentSection(CommentLength string, Comments []models.LinkUserPostComment, postID uint) {
 	<section class="bg-white dark:bg-gray-900 py-8 lg:py-16 antialiased">
 		<div class="max-w-2xl mx-auto px-4">
 			<div class="flex justify-between items-center mb-6">

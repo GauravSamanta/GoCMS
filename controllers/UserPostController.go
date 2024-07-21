@@ -77,7 +77,7 @@ func GetPost(c *gin.Context) {
 		var LinkUserComments []models.LinkUserPostComment
 		connections.DB.Preload("Comment").Preload("User").Where("post_id = ?", id).Find(&LinkUserComments)
 
-		render.Render(c, http.StatusOK, postview.Singlepost(post.Title, post.Description, content, strconv.Itoa(len(LinkUserComments)), LinkUserComments, int(post.ID)))
+		render.Render(c, http.StatusOK, postview.Singlepost(post, content, strconv.Itoa(len(LinkUserComments)), LinkUserComments))
 	}
 
 	if c.Request.Method == "POST" {

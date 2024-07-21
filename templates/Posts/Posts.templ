@@ -77,7 +77,7 @@ templ Posts(posts []models.UserPostLink, user models.User, latestPost models.Use
 								</h2>
 								<div class="flex mt-3">
 									<img
-										src="https://static.cricbuzz.com/a/img/v1/420x235/i1/c521004/duckett-sets-the-platform-with.jpg"
+										src={ latestPost.User.ProfileImgPath }
 										class="h-10 w-10 rounded-full mr-2 object-cover"
 									/>
 									<div>
@@ -118,7 +118,7 @@ templ Posts(posts []models.UserPostLink, user models.User, latestPost models.Use
 								</h2>
 								<div class="flex mt-3">
 									<img
-										src="https://static.cricbuzz.com/a/img/v1/420x235/i1/c521004/duckett-sets-the-platform-with.jpg"
+										src={ secondLatestPost.User.ProfileImgPath }
 										class="h-10 w-10 rounded-full mr-2 object-cover"
 									/>
 									<div>
@@ -150,7 +150,7 @@ templ Posts(posts []models.UserPostLink, user models.User, latestPost models.Use
 										</div>
 										<div class="flex mt-3">
 											<img
-												src="https://randomuser.me/api/portraits/men/86.jpg"
+												src={ post.User.ProfileImgPath }
 												class="h-10 w-10 rounded-full mr-2 object-cover"
 											/>
 											<div>
