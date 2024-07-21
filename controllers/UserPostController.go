@@ -94,8 +94,20 @@ func CreatePost(c *gin.Context) {
 	}
 
 	if c.Request.Method == "POST" {
-		image_path := PostImageUpload(c)
+		file, _, err := c.Request.FormFile("file")
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"message": "Invalid input",
+			})
+			return
+		}
+		defer file.Close()
+		var image_path string
 
+		if file != nil {
+			image_path = PostImageUpload(c)
+		}
+	
 		var postbody struct {
 			Title       string
 			Description string
