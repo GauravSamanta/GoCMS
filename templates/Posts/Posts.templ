@@ -53,6 +53,7 @@ templ Posts(posts []models.UserPostLink, user models.User, latestPost models.Use
 							></div>
 							<img
 								src={ latestPost.Post.Path }
+								alt={ latestPost.Post.Title }
 								class="absolute left-0 top-0 w-full h-full rounded z-0 object-cover"
 							/>
 							<div class="p-4 absolute bottom-0 left-0 z-20">
@@ -78,6 +79,7 @@ templ Posts(posts []models.UserPostLink, user models.User, latestPost models.Use
 								<div class="flex mt-3">
 									<img
 										src={ latestPost.User.ProfileImgPath }
+										alt={ latestPost.User.Name }
 										class="h-10 w-10 rounded-full mr-2 object-cover"
 									/>
 									<div>
@@ -94,6 +96,7 @@ templ Posts(posts []models.UserPostLink, user models.User, latestPost models.Use
 							></div>
 							<img
 								src={ secondLatestPost.Post.Path }
+								alt={ latestPost.Post.Title }
 								class="absolute left-0 top-0 w-full h-full rounded z-0 object-cover"
 							/>
 							<div class="p-4 absolute bottom-0 left-0 z-20">
@@ -119,6 +122,7 @@ templ Posts(posts []models.UserPostLink, user models.User, latestPost models.Use
 								<div class="flex mt-3">
 									<img
 										src={ secondLatestPost.User.ProfileImgPath }
+										alt={ secondLatestPost.User.Name }
 										class="h-10 w-10 rounded-full mr-2 object-cover"
 									/>
 									<div>
@@ -137,6 +141,7 @@ templ Posts(posts []models.UserPostLink, user models.User, latestPost models.Use
 									<img
 										class="h-48 lg:w-48 flex-none bg-cover text-center overflow-hidden opacity-75"
 										src={ post.Post.Path }
+										alt={ post.Post.Title }
 										title="deit is very important"
 									/>
 									<div class="bg-white rounded px-4 flex flex-col justify-between leading-normal">
@@ -151,6 +156,7 @@ templ Posts(posts []models.UserPostLink, user models.User, latestPost models.Use
 										<div class="flex mt-3">
 											<img
 												src={ post.User.ProfileImgPath }
+												alt={ post.User.Name }
 												class="h-10 w-10 rounded-full mr-2 object-cover"
 											/>
 											<div>

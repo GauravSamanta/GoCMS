@@ -2,18 +2,32 @@ package controllers
 
 import (
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
 	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
+	"github.com/Hrishikesh-Panigrahi/GoCMS/render"
+	view404 "github.com/Hrishikesh-Panigrahi/GoCMS/templates/404"
+	postview "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Admin"
 
 	"github.com/gin-gonic/gin"
 )
 
 func AdminGetPosts(c *gin.Context) {
+	// get the current logged in user
+	userID, _ := c.Get("userID")
+	var user models.User
+	connections.DB.First(&user, userID)
+
 	var posts []models.UserPostLink
 
-	result := connections.DB.Preload("User").Preload("Image").Find(&posts)
+	postresult := connections.DB.Find(&posts)
+	if postresult.Error != nil {
+		render.Render(c, http.StatusInternalServerError, view404.Page404("Posts not found"))
+	}
+
+	result := connections.DB.Preload("User").Preload("Post").Find(&posts)
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
 		return
@@ -23,12 +37,50 @@ func AdminGetPosts(c *gin.Context) {
 		posts[i].Post.FormatAndTruncate()
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"message": "Posts fetched successfully",
-		"result":  posts,
-	})
+	latestPost := getLatestPostByTime(posts)
+	secondLastestPost := getSecondLatestPostByTime(posts, latestPost)
 
-	// render.Render(c, http.StatusOK, postview.Posts(posts))
+	for i := 0; i < len(posts); i++ {
+		for j := i + 1; j < len(posts); j++ {
+			if posts[i].Post.CreatedAt.Unix() < posts[j].Post.CreatedAt.Unix() {
+				posts[i], posts[j] = posts[j], posts[i]
+			}
+		}
+	}
+
+	var updatedPosts []models.UserPostLink
+	for i := 0; i < len(posts); i++ {
+		//remove the latest post and secondLastestPost from the list
+		if posts[i].Post.ID != latestPost.Post.ID && posts[i].Post.ID != secondLastestPost.Post.ID {
+			updatedPosts = append(updatedPosts, posts[i])
+		}
+	}
+
+	render.Render(c, http.StatusOK, postview.AllPosts(updatedPosts, user))
+}
+
+func AdminGetPost(c *gin.Context) {
+	if c.Request.Method == "GET" {
+		var post models.Post
+
+		id := c.Param("post_id")
+
+		result := connections.DB.First(&post, id)
+		if result.Error != nil {
+			render.Render(c, http.StatusNotFound, view404.Page404("Post not found"))
+
+		}
+		content := string(MdToHTML([]byte(post.Content)))
+
+		var LinkUserComments []models.LinkUserPostComment
+		connections.DB.Preload("Comment").Preload("User").Where("post_id = ?", id).Find(&LinkUserComments)
+
+		render.Render(c, http.StatusOK, postview.UserSinglepost(post, content, strconv.Itoa(len(LinkUserComments)), LinkUserComments))
+	}
+
+	if c.Request.Method == "POST" {
+		CreateComment(c)
+	}
 }
 
 // create post

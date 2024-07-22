@@ -3,9 +3,10 @@ package views
 import (
 	"fmt"
 	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
+	views "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Posts"
 )
 
-templ Singlepost(post models.Post, Content string, CommentLength string, comments []models.LinkUserPostComment) {
+templ UserSinglepost(post models.Post, Content string, CommentLength string, comments []models.LinkUserPostComment) {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
@@ -31,7 +32,7 @@ templ Singlepost(post models.Post, Content string, CommentLength string, comment
 		<body class="bg-gray-100 text-gray-900">
 			<div class="container mx-auto mt-8 p-4">
 				<div class="bg-white rounded-lg shadow-md overflow-hidden">
-					<img src={ post.Path } alt={ post.Alt } class="w-full h-64 object-cover"/>
+					<img src={ "../../" + post.Path } alt={ post.Alt } class="w-full h-64 object-cover"/>
 					<div class="p-8">
 						<h3 class="text-blue-500 text-xs font-bold uppercase">today</h3>
 						<h1 class="text-3xl font-bold mt-2">{ post.Title }</h1>
@@ -42,7 +43,7 @@ templ Singlepost(post models.Post, Content string, CommentLength string, comment
 					</div>
 				</div>
 				<div class="mt-8">
-					<a href={ templ.URL("/user/post/") } class="text-blue-500 hover:underline">← Back to Posts</a>
+					<a href={ templ.URL("/admin/post/") } class="text-blue-500 hover:underline">← Back to Posts</a>
 				</div>
 			</div>
 			@CommentSection(CommentLength, comments, post.ID)
@@ -86,7 +87,7 @@ templ CommentSection(CommentLength string, Comments []models.LinkUserPostComment
 							<p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
 								<img
 									class="mr-2 w-6 h-6 rounded-full"
-									src={ comment.User.ProfileImgPath }
+									src={ "../../" + comment.User.ProfileImgPath }
 									alt={ comment.User.Name }
 								/>{ comment.User.Name }
 							</p>
@@ -95,7 +96,7 @@ templ CommentSection(CommentLength string, Comments []models.LinkUserPostComment
 									pubdate
 									datetime="2022-03-12"
 									title="March 12th, 2022"
-								>{ FormatTime(comment.Comment.CreatedAt) }</time>
+								>{ views.FormatTime(comment.Comment.CreatedAt) }</time>
 							</p>
 						</div>
 						<button
@@ -177,4 +178,8 @@ templ CommentSection(CommentLength string, Comments []models.LinkUserPostComment
 			}
 		</div>
 	</section>
+}
+
+templ AllPosts(userPostLink []models.UserPostLink, user models.User) {
+	
 }

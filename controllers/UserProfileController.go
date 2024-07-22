@@ -24,7 +24,11 @@ func GetProfile(c *gin.Context) {
 
 	connections.DB.Preload("Post").Where("user_id = ?", id).Find(&userPostLink)
 
-	render.Render(c, http.StatusOK, views.UserProfile(user, strconv.Itoa(len(userPostLink))))
+	var userPostComment []models.LinkUserPostComment
+
+	connections.DB.Preload("Post").Where("user_id = ?", id).Find(&userPostComment)
+
+	render.Render(c, http.StatusOK, views.UserProfile(user, strconv.Itoa(len(userPostLink)), strconv.Itoa(len(userPostComment))))
 }
 
 func GetProfilePosts(c *gin.Context) {

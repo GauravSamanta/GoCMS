@@ -161,7 +161,12 @@ func GetUser(c *gin.Context) {
 		render.Render(c, http.StatusNotFound, view404.Page404("User not found"))
 		return
 	}
-	render.Render(c, http.StatusOK, views.GetUser(user))
+
+	var userPost models.UserPostLink
+
+	connections.DB.Preload("Post").Where("user_id = ?", id).Find(&userPost)
+	connections.DB.Preload("Location").Preload("Role").Find(&user)
+	render.Render(c, http.StatusOK, views.GetUser(user, userPost))
 }
 
 func GetUsers(c *gin.Context) {

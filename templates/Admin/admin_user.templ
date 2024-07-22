@@ -3,6 +3,8 @@ package views
 import (
 	"fmt"
 	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
+	"github.com/Hrishikesh-Panigrahi/GoCMS/templates/Posts"
+
 	"strconv"
 	"time"
 )
@@ -498,7 +500,7 @@ templ EditUser(user models.User) {
 	</html>
 }
 
-templ GetUser(user models.User) {
+templ GetUser(user models.User, userPost models.UserPostLink) {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
@@ -518,23 +520,18 @@ templ GetUser(user models.User) {
 						<div class="text-center">
 							<img
 								class="h-32 w-32 rounded-full mx-auto border-4 border-white -mt-16"
-								src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqkUYrITWyI8OhPNDHoCDUjGjhg8w10_HRqg&s"
-								alt="Profile Picture"
+								src={ user.ProfileImgPath }
+								alt={ user.Alt }
 							/>
 							<h2 class="text-2xl font-semibold mt-2">{ user.Name }</h2>
 							<p class="text-gray-600"></p>
 							<p class="text-gray-500">{ user.Role.Description }</p>
-							<p class="text-gray-500">Last Updated: { TimeToString(user.UpdatedAt) }</p>
+							<p class="text-gray-500">Last Updated: { views.FormatTime(user.UpdatedAt) }</p>
 						</div>
 						<div class="mt-4">
 							<h3 class="text-lg font-medium">About Me</h3>
 							<p class="mt-2 text-gray-600">
-								Lorem Ipsum is simply dummy text of the printing and typesetting
-								industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-								unknown printer took a galley of type and scrambled it to make a type specimen book. It has
-								survived not only five centuries, but also the leap into electronic typesetting, remaining
-								essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets
-								containing Lorem Ipsum passages, and more recently with desktop
+								{ user.Bio }
 							</p>
 						</div>
 						<div class="mt-4">
@@ -542,7 +539,7 @@ templ GetUser(user models.User) {
 							<ul class="mt-2 text-gray-600">
 								<li><strong>Email:</strong> { user.Email } </li>
 								<li><strong>Phone:</strong> 1342536457</li>
-								<li><strong>Location:</strong> mumbai</li>
+								<li><strong>Location:</strong> { user.Location.CityName }</li>
 							</ul>
 						</div>
 						<div class="mt-4 text-center">
@@ -552,6 +549,8 @@ templ GetUser(user models.User) {
 						</div>
 					</div>
 				</div>
+
+				// this is for user posts
 				<div class="container mx-auto mt-8">
 					<div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
 						<div class="p-4">
@@ -560,14 +559,14 @@ templ GetUser(user models.User) {
 								<div class="bg-white rounded-lg shadow-md overflow-hidden">
 									<img src="https://tinyurl.com/4d7593fm" alt="Post Image" class="w-full h-48 object-cover"/>
 									<div class="p-4">
-										<h3 class="text-blue-500 text-xs font-bold uppercase">Date</h3>
-										<h1 class="text-xl font-bold mt-2">Title</h1>
-										<p class="mt-2 text-gray-700">.Description </p>
-										<p class="text-sm text-gray-500 mt-1">Category:  .Category </p>
+										<h3 class="text-blue-500 text-xs font-bold uppercase">{  views.FormatTime(userPost.Post.CreatedAt) }</h3>
+										<h1 class="text-xl font-bold mt-2">{ userPost.Post.Title }</h1>
+										<p class="mt-2 text-gray-700">{ userPost.Post.Description } </p>
+										<p class="text-sm text-gray-500 mt-1">Category:  { userPost.Post.Category } </p>
 										<div class="mt-2">
 											<span class="inline-block bg-blue-200 text-blue-800 text-xs px-2 py-1 rounded-full mr-2">tages </span>
 										</div>
-										<a href="" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring" target="_self">Read More</a>
+										<a href={ templ.URL("/admin/user/post/" + fmt.Sprintf("%d", userPost.Post.ID)) } class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring" target="_self">Read More</a>
 									</div>
 								</div>
 							</div>
