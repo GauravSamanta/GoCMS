@@ -37,9 +37,6 @@ func AdminGetPosts(c *gin.Context) {
 		posts[i].Post.FormatAndTruncate()
 	}
 
-	latestPost := getLatestPostByTime(posts)
-	secondLastestPost := getSecondLatestPostByTime(posts, latestPost)
-
 	for i := 0; i < len(posts); i++ {
 		for j := i + 1; j < len(posts); j++ {
 			if posts[i].Post.CreatedAt.Unix() < posts[j].Post.CreatedAt.Unix() {
@@ -48,15 +45,7 @@ func AdminGetPosts(c *gin.Context) {
 		}
 	}
 
-	var updatedPosts []models.UserPostLink
-	for i := 0; i < len(posts); i++ {
-		//remove the latest post and secondLastestPost from the list
-		if posts[i].Post.ID != latestPost.Post.ID && posts[i].Post.ID != secondLastestPost.Post.ID {
-			updatedPosts = append(updatedPosts, posts[i])
-		}
-	}
-
-	render.Render(c, http.StatusOK, postview.AllPosts(updatedPosts, user))
+	render.Render(c, http.StatusOK, postview.AllPosts(posts, user))
 }
 
 func AdminGetPost(c *gin.Context) {

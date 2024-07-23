@@ -23,7 +23,7 @@ templ UserProfilePosts(user models.User, posts []models.UserPostLink) {
 					</div>
 					<div class="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-4">
 						for _, post := range posts {
-							<article class="flex flex-col dark:bg-gray-50">
+							<article class="flex flex-col dark:bg-gray-50 border rounded-lg hover:shadow-lg transition-shadow">
 								<a rel="noopener noreferrer" href="#" aria-label="Te nulla oportere reprimique his dolorum">
 									<img alt="" class="object-cover w-full h-52 dark:bg-gray-500" src={ "../" + post.Post.Path }/>
 								</a>

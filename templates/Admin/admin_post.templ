@@ -12,7 +12,7 @@ templ UserSinglepost(post models.Post, Content string, CommentLength string, com
 		<head>
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-			<title>Form</title>
+			<title>Post</title>
 			<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
 			<link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css" rel="stylesheet"/>
 			<link href="/static/markdown.css" rel="stylesheet"/>
@@ -181,5 +181,47 @@ templ CommentSection(CommentLength string, Comments []models.LinkUserPostComment
 }
 
 templ AllPosts(userPostLink []models.UserPostLink, user models.User) {
-	
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<title>User Profile</title>
+			<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+		</head>
+		<body>
+			<section class="py-6 sm:py-12 dark:bg-gray-100 dark:text-gray-800">
+				<div class="container p-6 mx-auto space-y-8">
+					<div class="space-y-2 text-center">
+						<h2 class="text-3xl font-bold">Welcome { user.Name }</h2>
+						<p class="font-serif text-sm dark:text-gray-600">Here are all the posts...</p>
+					</div>
+					<div class="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+						for _, post := range userPostLink {
+							<article class="flex flex-col border rounded-lg shadow-lg hover:shadow-xl transition-shadow bg-white dark:bg-gray-800">
+								<a rel="noopener noreferrer" href={ templ.URL("/admin/user/post/" + fmt.Sprintf("%d", post.Post.ID)) } aria-label="Te nulla oportere reprimique his dolorum" class="block">
+									<img alt={ post.Post.Alt } class="object-cover w-full h-48 rounded-t-lg" src={ "../" + post.Post.Path }/>
+								</a>
+								<div class="flex items-center p-4 space-x-3">
+									<img class="w-12 h-12 rounded-full" src={ post.User.ProfileImgPath } alt={ post.User.Name }/>
+									<div>
+										<a href={ templ.URL("/admin/user/" + fmt.Sprintf("%d", user.ID)) } class="hover:underline"><h3 class="text-md font-semibold">{ post.User.Name }</h3> </a>
+										<span class="text-xs text-gray-500 dark:text-gray-400">{ views.FormatTime(post.Post.CreatedAt) }</span>
+									</div>
+								</div>
+								<div class="flex flex-col flex-1 px-4 pb-4">
+									<a href={ templ.URL("/admin/user/post/" + fmt.Sprintf("%d", post.Post.ID)) } class="text-lg font-semibold tracking-wider uppercase hover:underline dark:text-violet-600">{ post.Post.Title }</a>
+									<h3 class="flex-1 py-2 text-md leading-snug">{ post.Post.Description }</h3>
+									<div class="flex justify-between pt-3 text-xs text-gray-500 dark:text-gray-400">
+										<span>2.1K views</span>
+										<a href={ templ.URL("/admin/user/post/" + fmt.Sprintf("%d", post.Post.ID)) } class="hover:underline">Read more</a>
+									</div>
+								</div>
+							</article>
+						}
+					</div>
+				</div>
+			</section>
+		</body>
+	</html>
 }
