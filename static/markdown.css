@@ -1,4 +1,13 @@
 /* Basic Reset */
+.raw-content {
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
 .raw-content h1, h2, h3, h4, h5, h6, p, blockquote, pre, code, ul, ol, li, table, th, td, a {
     margin: 0;
     padding: 0;

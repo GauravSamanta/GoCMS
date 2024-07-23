@@ -87,6 +87,20 @@ func DeleteUser(c *gin.Context) {
 	render.Render(c, http.StatusOK, processedviews.Success("User Deleted Successfully", name, "", ""))
 }
 
+func BulkDeleteUser(c *gin.Context) {
+	user_ids := c.PostFormArray("user_id")
+
+	var user []models.User
+	connections.DB.Where("id IN ?", user_ids).Find(&user)
+	connections.DB.Unscoped().Delete(&user)
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Bulk Delete User",
+		"user":    user,
+	})
+
+}
+
 func UpdateUser(c *gin.Context) {
 	if c.Request.Method == "GET" {
 		id := c.Param("id")

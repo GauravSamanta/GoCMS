@@ -16,17 +16,7 @@ templ Singlepost(post models.Post, Content string, CommentLength string, comment
 			<link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css" rel="stylesheet"/>
 			<link href="/static/markdown.css" rel="stylesheet"/>
 			<script src="/static/js/htmx.min.js"></script>
-			<style>
-				/* Internal CSS for styling templ.Raw content */
-				.raw-content {
-					font-family: Arial, sans-serif;
-					color: #333;
-					background-color: #f9f9f9;
-					padding: 20px;
-					border: 1px solid #ddd;
-					border-radius: 5px;
-				}
-			</style>
+	
 		</head>
 		<body class="bg-gray-100 text-gray-900">
 			<div class="container mx-auto mt-8 p-4">
@@ -36,7 +26,7 @@ templ Singlepost(post models.Post, Content string, CommentLength string, comment
 						<h3 class="text-blue-500 text-xs font-bold uppercase">today</h3>
 						<h1 class="text-3xl font-bold mt-2">{ post.Title }</h1>
 						<p class="mt-2 text-gray-700">{ post.Description }</p>
-						<div class="raw-content prose prose-lg mt-6">
+						<div class="raw-content mt-6">
 							@templ.Raw(Content)
 						</div>
 					</div>

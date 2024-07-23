@@ -21,6 +21,7 @@ func adminRoutes(superRoute *gin.RouterGroup) {
 			adminUserRouts.POST("/update-password/:id", controllers.UpdatePassword)
 			adminUserRouts.PUT("/:id", controllers.UpdateUser)
 			adminUserRouts.DELETE("/:id", controllers.DeleteUser)
+			adminUserRouts.POST("/bulkdelete/", controllers.BulkDeleteUser)
 		}
 
 		

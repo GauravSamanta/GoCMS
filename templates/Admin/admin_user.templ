@@ -236,53 +236,65 @@ templ Users(users []models.User) {
 							</div>
 						</div>
 						<div class="overflow-x-auto">
-							<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-								<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-									<tr>
-										<th scope="col" class="px-4 py-3">Name</th>
-										<th scope="col" class="px-4 py-3">Email</th>
-										<th scope="col" class="px-4 py-3">Role Description</th>
-										<th scope="col" class="px-4 py-3">Updated At</th>
-										<th scope="col" class="px-4 py-3">
-											<span class="sr-only">Actions</span>
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-									for _, user := range users {
-										<tr class="border-b dark:border-gray-700">
-											<th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-												<a href={ templ.URL("/admin/user/" + fmt.Sprintf("%d", user.ID)) } target="_self">
-													{ user.Name }
-												</a>
-											</th>
-											<td class="px-4 py-3">{ user.Email }</td>
-											<td class="px-4 py-3">{ user.Role.Description }</td>
-											<td class="px-4 py-3">{ TimeToString(user.UpdatedAt) }</td>
-											<td class="px-4 py-3 flex items-center justify-end">
-												<button id="dropdown-button" data-dropdown-toggle="dropdown" class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100" type="button">
-													<svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-														<path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path>
-													</svg>
+							<form action={ "/api/v1/admin/user/bulkdelete" } method="POST">
+								<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+									<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+										<tr>
+											<th scope="col" class="px-4 py-3">
+												<button type="submit">
+													Delete All
 												</button>
-												<div id="dropdown" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
-													<ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
-														<li>
-															<a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</a>
-														</li>
-														<li>
-															<a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
-														</li>
-													</ul>
-													<div class="py-1">
-														<a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
-													</div>
-												</div>
-											</td>
+											</th>
+											<th scope="col" class="px-4 py-3">Name</th>
+											<th scope="col" class="px-4 py-3">Email</th>
+											<th scope="col" class="px-4 py-3">Role Description</th>
+											<th scope="col" class="px-4 py-3">Updated At</th>
+											<th scope="col" class="px-4 py-3">
+												<span class="sr-only">Actions</span>
+											</th>
 										</tr>
-									}
-								</tbody>
-							</table>
+									</thead>
+									<tbody>
+										for _, user := range users {
+											<tr class="border-b dark:border-gray-700">
+												<td class="p-4">
+													<div class="flex items-center">
+														<input value={ UinttoString(user.ID) } name="user_id" type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out"/>
+													</div>
+												</td>
+												<th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+													<a href={ templ.URL("/admin/user/" + fmt.Sprintf("%d", user.ID)) } target="_self">
+														{ user.Name }
+													</a>
+												</th>
+												<td class="px-4 py-3">{ user.Email }</td>
+												<td class="px-4 py-3">{ user.Role.Description }</td>
+												<td class="px-4 py-3">{ views.FormatTime(user.UpdatedAt) }</td>
+												<td class="px-4 py-3 flex items-center justify-end">
+													<button id="dropdown-button" data-dropdown-toggle="dropdown" class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100" type="button">
+														<svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+															<path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path>
+														</svg>
+													</button>
+													<div id="dropdown" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+														<ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
+															<li>
+																<a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</a>
+															</li>
+															<li>
+																<a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"></a>
+															</li>
+														</ul>
+														<div class="py-1">
+															<a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
+														</div>
+													</div>
+												</td>
+											</tr>
+										}
+									</tbody>
+								</table>
+							</form>
 						</div>
 						<nav class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4" aria-label="Table navigation">
 							<span class="text-sm font-normal text-gray-500 dark:text-gray-400">
