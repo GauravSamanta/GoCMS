@@ -22,10 +22,6 @@ go.work.sum
 env
 .env
 
-# Binary file for the application
-tmp/
-tmp
-
 # Generated file for templ
 *_templ.go
 
@@ -34,4 +30,3 @@ media
 media/
 
 mytodo.txt
-vendor

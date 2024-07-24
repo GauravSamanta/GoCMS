@@ -6,8 +6,11 @@ FROM golang:1.22.2
 WORKDIR /app
 
 # Download Go modules
-COPY . .
+COPY go.mod ./
+COPY go.sum ./
 RUN go mod download
+#COPY *.go ./
+COPY . ./
 
 RUN go install github.com/air-verse/air@latest
 # Copy the source code. Note the slash at the end, as explained in
