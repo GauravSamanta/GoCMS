@@ -8,7 +8,6 @@ all: build
 
 
 build: 
-
 	$(GOCMD) build -v -o $(BUILD_DIR)/$(BINARY_NAME) .
 	
 clean:
