@@ -1,6 +1,6 @@
 # Define variables
 GOCMD=go
-TEMPL=templ
+# TEMPL=templ
 BUILD_DIR=./tmp
 BINARY_NAME=main.exe
 
@@ -8,7 +8,7 @@ all: build
 
 
 build: 
-	$(TEMPL) generate
+
 	$(GOCMD) build -v -o $(BUILD_DIR)/$(BINARY_NAME) .
 	
 clean:
