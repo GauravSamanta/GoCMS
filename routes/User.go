@@ -17,7 +17,7 @@ func userRoutes(superRoute *gin.RouterGroup) {
 			userPostRoutes.POST("/comment/:post_id", controllers.GetPost)
 		}
 	}
-	UserFormRoutes := superRoute.Group("/user")
+	UserFormRoutes := superRoute.Group("/:slug")
 	{
 		userPostFormRoutes := UserFormRoutes.Group("/post", middleware.AuthMiddleware)
 		{

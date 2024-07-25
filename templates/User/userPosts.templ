@@ -25,7 +25,7 @@ templ UserProfilePosts(user models.User, posts []models.UserPostLink) {
 						for _, post := range posts {
 							<article class="flex flex-col dark:bg-gray-50 border rounded-lg hover:shadow-lg transition-shadow">
 								<a rel="noopener noreferrer" href="#" aria-label="Te nulla oportere reprimique his dolorum">
-									<img alt="" class="object-cover w-full h-52 dark:bg-gray-500" src={ "../" + post.Post.Path }/>
+									<img alt={ post.Post.Title } class="object-cover w-full h-52 dark:bg-gray-500" src={ "../" + post.Post.Path }/>
 								</a>
 								<div class="flex flex-col flex-1 p-6">
 									<a rel="noopener noreferrer" href="#" aria-label="Te nulla oportere reprimique his dolorum"></a>
@@ -43,4 +43,8 @@ templ UserProfilePosts(user models.User, posts []models.UserPostLink) {
 			</section>
 		</body>
 	</html>
+}
+
+templ UserEditPost() {
+	
 }

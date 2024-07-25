@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
@@ -42,9 +43,13 @@ func Login(c *gin.Context) {
 
 		ValidatePassword(user.Password, body.Password, c)
 
+		url:=user.UserName+"/post"
+
+		fmt.Printf("url: %s",url)
 		//set cookies and jwt token
 		services.JwtToken(c, user)
-		render.Redirect(c, "/user/post", http.StatusFound)
+	
+		render.Redirect(c, "/"+url, http.StatusFound)
 	}
 
 }

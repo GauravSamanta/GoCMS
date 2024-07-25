@@ -107,7 +107,7 @@ func CreatePost(c *gin.Context) {
 		if file != nil {
 			image_path = PostImageUpload(c)
 		}
-	
+
 		var postbody struct {
 			Title       string
 			Description string
@@ -153,32 +153,47 @@ func CreatePost(c *gin.Context) {
 
 // update post
 func UpdatePost(c *gin.Context) {
-	var postbody struct {
-		Title       string
-		Description string
-		Content     string
-		Category    string
-		Tags        string
+
+	if c.Request.Method == "GET" {
+		id := c.Param("id")
+		var post models.UserPostLink
+
+		result := connections.DB.First(&post, id)
+		if result.Error != nil {
+			render.Render(c, http.StatusNotFound, view404.Page404("Post not found"))
+		}
+
+		
 	}
+	if c.Request.Method == "POST" {
 
-	ID := StringToUint(c.Param("id"))
+		var postbody struct {
+			Title       string
+			Description string
+			Content     string
+			Category    string
+			Tags        string
+		}
 
-	if c.Bind(&postbody) != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Invalid input",
-		})
-		return
-	}
+		ID := StringToUint(c.Param("id"))
 
-	result := connections.DB.Save(&models.Post{ID: ID, Title: postbody.Title, Description: postbody.Description,
-		Content: postbody.Content, Category: postbody.Category, Tags: postbody.Tags,
-		UpdatedAt: time.Now()})
+		if c.Bind(&postbody) != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"message": "Invalid input",
+			})
+			return
+		}
 
-	if result.Error != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": "Error while updating the post",
-		})
-		return
+		result := connections.DB.Save(&models.Post{ID: ID, Title: postbody.Title, Description: postbody.Description,
+			Content: postbody.Content, Category: postbody.Category, Tags: postbody.Tags,
+			UpdatedAt: time.Now()})
+
+		if result.Error != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": "Error while updating the post",
+			})
+			return
+		}
 	}
 
 }
