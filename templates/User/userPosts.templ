@@ -1,9 +1,26 @@
 package views
 
 import (
+	"fmt"
 	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
 	views "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Posts"
 )
+
+
+func FirstN2(s string, n int, suffix string) string {
+	if len(s) <= n {
+		return s
+	}
+	return s[:n] + suffix
+}
+
+// function of the post class
+func FormatAndTruncate(description string) string {
+	if len(description) > 150 {
+		description = FirstN2(description, 150, "....")
+	}
+	return description
+}
 
 templ UserProfilePosts(user models.User, posts []models.UserPostLink) {
 	<!DOCTYPE html>
@@ -29,8 +46,8 @@ templ UserProfilePosts(user models.User, posts []models.UserPostLink) {
 								</a>
 								<div class="flex flex-col flex-1 p-6">
 									<a rel="noopener noreferrer" href="#" aria-label="Te nulla oportere reprimique his dolorum"></a>
-									<a rel="noopener noreferrer" href="#" class="text-xs tracking-wider uppercase hover:underline dark:text-violet-600">{ post.Post.Title }</a>
-									<h3 class="flex-1 py-2 text-lg font-semibold leading-snug">{ post.Post.Description }</h3>
+									<a rel="noopener noreferrer" href={ templ.URL("/" + user.UserName + "/post/update/" + fmt.Sprintf("%d", post.Post.ID)) } class="text-lg font-semibold tracking-wider uppercase hover:underline dark:text-violet-600">{ post.Post.Title }</a>
+									<h3 class="flex-1 py-2 text-md leading-snug">{ FormatAndTruncate(post.Post.Description) }</h3>
 									<div class="flex flex-wrap justify-between pt-3 space-x-2 text-xs dark:text-gray-600">
 										<span>{ views.FormatTime(post.Post.CreatedAt) }</span>
 										<span>2.1K views</span>
@@ -45,6 +62,71 @@ templ UserProfilePosts(user models.User, posts []models.UserPostLink) {
 	</html>
 }
 
-templ UserEditPost() {
-	
+templ UserEditPost(post models.Post) {
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<title>Form</title>
+			<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+			// <script src="https://cdn.tiny.cloud/1/uvlxvdiho78a4yw12qh9uu0p1wnlucvxctf8t7m17q2h07i8/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+			// <script>
+			// 	tinymce.init({
+			// 		selector: '#content'
+			// 	});
+			// </script>
+			<style>			
+				input[type="text"],
+				textarea {
+					width: 100%;
+					padding: 10px;
+					margin-bottom: 20px;
+					border: 1px solid #ccc;
+					border-radius: 4px;
+				}
+			</style>
+		</head>
+		<body class="bg-gray-100">
+			<div class="min-h-screen flex items-center justify-center p-4">
+				<div class="max-w-screen-lg bg-white rounded-lg shadow-lg p-8 md:p-12 mt-8 mb-8 w-full">
+					<h2 class="text-3xl font-bold mb-6 text-center">Submit a Post</h2>
+					<form action={ templ.URL("/api/v1/user/post/" + fmt.Sprintf("%d", post.ID)) } method="PUT" enctype="multipart/form-data">
+						<div class="mb-4">
+							<label for="title" class="block text-gray-700 font-bold mb-2">Title</label>
+							<input value={ post.Title } type="text" id="title" name="Title" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required/>
+						</div>
+						<div class="mb-4">
+							<label for="description" class="block text-gray-700 font-bold mb-2">Description</label>
+							<input value={ post.Description } type="text" id="description" name="Description" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required/>
+						</div>
+						<div class="mb-4">
+							<label for="content" class="block text-gray-700 font-bold mb-2">Content</label>
+							<textarea   id="content" name="Content" rows="6" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">@templ.Raw(post.Content)</textarea>
+						</div>
+						<div class="mb-4">
+							<label for="category" class="block text-gray-700 font-bold mb-2">Category</label>
+							<select value={ post.Category } id="category" name="Category" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+								<option value="Tech">Tech</option>
+								<option value="Health">Health</option>
+								<option value="Bussiness">Business</option>
+								<option value="Lifestyle">Lifestyle</option>
+							</select>
+						</div>
+						<div class="mb-4">
+							<label for="tags" class="block text-gray-700 font-bold mb-2">Tags (comma separated)</label>
+							<input value={ post.Tags } type="text" id="tags" name="Tags" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+						</div>
+						<div class="mb-6">
+							<label for="image" class="block text-gray-700 font-bold mb-2">Upload Image</label>
+							<input type="file" id="file" name="file" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+						</div>
+						<div class="text-center">
+							<button type="submit" class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">Submit Post</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</body>
+	</html>
 }

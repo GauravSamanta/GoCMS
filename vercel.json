@@ -1,0 +1,11 @@
+{
+    "trailingSlash": false,
+    "cleanUrls": true,
+    "rewrites": [
+        {
+            "source": "/api(.*)",
+            "destination": "./main.go"
+        }
+    ]
+
+}

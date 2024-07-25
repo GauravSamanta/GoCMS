@@ -17,18 +17,19 @@ func userRoutes(superRoute *gin.RouterGroup) {
 			userPostRoutes.POST("/comment/:post_id", controllers.GetPost)
 		}
 	}
-	UserFormRoutes := superRoute.Group("/:slug")
+
+	UserGETRoutes := superRoute.Group("/:slug")
 	{
-		userPostFormRoutes := UserFormRoutes.Group("/post", middleware.AuthMiddleware)
+		userPostGETRoutes := UserGETRoutes.Group("/post", middleware.AuthMiddleware)
 		{
-			userPostFormRoutes.GET("/", controllers.GetPosts)
-			userPostFormRoutes.GET("/:id", controllers.GetPost)
-			userPostFormRoutes.GET("/create", controllers.CreatePost)
-			userPostFormRoutes.GET("/update/:id", controllers.UpdatePost)
-			userPostFormRoutes.GET("/delete/:id", controllers.DeletePost)
+			userPostGETRoutes.GET("/", controllers.GetPosts)
+			userPostGETRoutes.GET("/:id", controllers.GetPost)
+			userPostGETRoutes.GET("/create", controllers.CreatePost)
+			userPostGETRoutes.GET("/update/:id", controllers.UpdatePost)
+			userPostGETRoutes.GET("/delete/:id", controllers.DeletePost)
 		}
 
-		userProfleRoutes := UserFormRoutes.Group("/profile", middleware.AuthMiddleware)
+		userProfleRoutes := UserGETRoutes.Group("/profile", middleware.AuthMiddleware)
 		{
 			userProfleRoutes.GET("/:id", controllers.GetProfile)
 			userProfleRoutes.GET("/:id/posts", controllers.GetProfilePosts)

@@ -185,19 +185,12 @@ func GetUser(c *gin.Context) {
 
 func GetUsers(c *gin.Context) {
 	var users []models.User
-	result := connections.DB.Find(&users)
-	if result.Error != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": "Error while fetching the users",
-		})
-		return
-	}
-	result = connections.DB.Preload("Role").Find(&users)
-	if result.Error != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": "Error while preloading the role",
-		})
-		return
+
+	query := c.Query("user-search")
+	if query != "" {
+		connections.DB.Preload("Role").Where("name LIKE ? OR user_name LIKE ?", "%"+query+"%", "%"+query+"%").Find(&users)
+	} else {
+		connections.DB.Preload("Role").Find(&users)
 	}
 
 	render.Render(c, http.StatusOK, views.Users(users))
