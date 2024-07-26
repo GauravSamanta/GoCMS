@@ -160,7 +160,7 @@ templ Users(users []models.User) {
 		<head>
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-			<title>Create User</title>
+			<title>Admin-DashBoard</title>
 			<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
 			<link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css" rel="stylesheet"/>
 		</head>
@@ -171,7 +171,7 @@ templ Users(users []models.User) {
 					<div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
 						<div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
 							<div class="w-full md:w-1/2">
-								<form action="/admin/user" method="GET" class="max-w-md mx-auto">
+								<form action="/admin/user" method="GET" class="max-width-85 max-w-md">
 									<label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
 									<div class="relative">
 										<div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -179,7 +179,7 @@ templ Users(users []models.User) {
 												<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"></path>
 											</svg>
 										</div>
-										<input type="search" name="user-search" id="user-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Mockups, Logos..." required/>
+										<input type="search" name="user-search" id="user-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Users..." required/>
 										<button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
 									</div>
 								</form>
@@ -220,19 +220,24 @@ templ Users(users []models.User) {
 											<path clip-rule="evenodd" fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"></path>
 										</svg>
 									</button>
-									<div id="filterDropdown" class="z-10 hidden w-48 p-3 bg-white rounded-lg shadow dark:bg-gray-700">
-										<h6 class="mb-3 text-sm font-medium text-gray-900 dark:text-white">Choose</h6>
-										<ul class="space-y-2 text-sm" aria-labelledby="filterDropdownButton">
-											<li class="flex items-center">
-												<input id="apple" type="checkbox" value="" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"/>
-												<label for="apple" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">by role</label>
-											</li>
-											<li class="flex items-center">
-												<input id="fitbit" type="checkbox" value="" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"/>
-												<label for="fitbit" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">by last updated</label>
-											</li>
-										</ul>
-									</div>
+									<form id="filterForm" action="/admin/user" method="GET" class="mb-4 flex space-x-4">
+										<div id="filterDropdown" class="z-10 hidden w-48 p-3 bg-white rounded-lg shadow dark:bg-gray-700">
+											<h6 class="mb-3 text-sm font-medium text-gray-900 dark:text-white">Choose</h6>
+											<ul class="space-y-2 text-sm" aria-labelledby="filterDropdownButton">
+												<li class="flex items-center">
+													<input id="roleFilter" name="role" type="checkbox" value="1" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"/>
+													<label for="roleFilter" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">By Admin</label>
+												</li>
+												<li class="flex items-center">
+													<input id="dateFilter" name="last_updated" type="checkbox" value="" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"/>
+													<label for="dateFilter" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">By last updated</label>
+												</li>
+											</ul>
+											<button type="submit">
+												submit
+											</button>
+										</div>
+									</form>
 								</div>
 							</div>
 						</div>
@@ -365,7 +370,7 @@ templ EditUser(user models.User) {
 		<head>
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-			<title>Create User</title>
+			<title>Edit User</title>
 			<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
 			<script src="/static/js/htmx.min.js"></script>
 		</head>
@@ -607,7 +612,7 @@ templ UpdatePassword() {
 		<head>
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-			<title>User Profile</title>
+			<title>Update User Password</title>
 			<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
 		</head>
 		<body>

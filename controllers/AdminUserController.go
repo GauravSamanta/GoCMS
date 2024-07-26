@@ -186,9 +186,15 @@ func GetUser(c *gin.Context) {
 func GetUsers(c *gin.Context) {
 	var users []models.User
 
-	query := c.Query("user-search")
-	if query != "" {
-		connections.DB.Preload("Role").Where("name LIKE ? OR user_name LIKE ?", "%"+query+"%", "%"+query+"%").Find(&users)
+	userSearch := c.Query("user-search")
+
+	role:= c.Query("role")
+	lastUpdated:= c.Query("last_updated")
+
+	fmt.Println(role, lastUpdated)
+
+	if userSearch != "" {
+		connections.DB.Preload("Role").Where("name LIKE ? OR user_name LIKE ?", "%"+userSearch+"%", "%"+userSearch+"%").Find(&users)
 	} else {
 		connections.DB.Preload("Role").Find(&users)
 	}
