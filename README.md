@@ -115,28 +115,28 @@ GoCMS/
 ## Run Locally
 To run the project locally, you have 3 options:
 
-### Launch Debugger
-1. Open your project in Visual Studio Code.
-2. Set breakpoints as needed.
-3. Launch the debugger by pressing F5 or by selecting Run > Start Debugging from the menu.
+1. ### Launch Debugger
+   1. Open your project in Visual Studio Code.
+   2. Set breakpoints as needed.
+   3. Launch the debugger by pressing F5 or by selecting Run > Start Debugging from the menu.
 
-### Run Air
+2. ### Run Air
 Ensure you have Air installed for live reloading.
 
-1. Start Air by running the following command in your terminal:
-```sh
-air
-```
+   1. Start Air by running the following command in your terminal:
+   ```sh
+   air
+   ```
 
-### Run go run main.go Command
-1. Open your terminal.
+3. ### Run go run main.go Command
+   1. Open your terminal.
 
-2. Navigate to the project directory.
+   2. Navigate to the project directory.
 
-3. Run the following command to start the application:
-```sh
-go run main.go
-```
+   3. Run the following command to start the application:
+   ```sh
+   go run main.go
+   ```
 
 **Note:** Before running your project, make sure to generate the Templ files in the terminal to get the most updated UI. You can do this by running:
 ```sh
