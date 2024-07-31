@@ -16,13 +16,13 @@ A simple CMS (Content Management System) built with Go, GORM, and the Gin framew
 
 - User Authentication (Login, Registration)
 - JWT-based authentication middleware 
-- Post creation, listing, and detail views 📝
+- Post creation, listing, and detail views 
 - Commenting system
-- Real-time updates with HTMX ⚡
-- Responsive design with Bootstrap 📱
-- TinyMCE advanced WYSIWYG HTML editor 🖋️
-- Database management with Hasura using GraphQL with PostgreSQL 🗄️
-- Containerization with Docker 🐳
+- Real-time updates with HTMX 
+- Responsive design with Bootstrap 
+- TinyMCE advanced WYSIWYG HTML editor 
+- Database management with PostgreSQL 
+- Containerization with Docker 
 - Post creation, listing, and detail views via admin
 - Users creation, listing, and detail views via admin
 
