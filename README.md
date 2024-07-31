@@ -71,7 +71,7 @@ And you are all set
 docker pull hrishikeshpanigrahi025/my-go-app
 ```
 
-2 . **Run the Docker container:**
+2. **Run the Docker container:**
 ```sh
 docker run -p 8000:8000 hrishikeshpanigrahi025/my-go-app
 ```
@@ -115,12 +115,12 @@ GoCMS/
 ## Run Locally
 To run the project locally, you have 3 options:
 
-# Launch Debugger
+### Launch Debugger
 1. Open your project in Visual Studio Code.
 2. Set breakpoints as needed.
 3. Launch the debugger by pressing F5 or by selecting Run > Start Debugging from the menu.
 
-# Run Air
+### Run Air
 Ensure you have Air installed for live reloading.
 
 1. Start Air by running the following command in your terminal:
@@ -128,7 +128,7 @@ Ensure you have Air installed for live reloading.
 air
 ```
 
-# Run go run main.go Command
+### Run go run main.go Command
 1. Open your terminal.
 
 2. Navigate to the project directory.
