@@ -10,14 +10,26 @@ A simple CMS (Content Management System) built with Go, GORM, and the Gin framew
 - [Usage](#usage)
 - [Project Structure](#project-structure)
 - [Routes](#routes)
-- [Contributing](#contributing)
+- [Docker](#docker)
 
 ## Features
 
 - User Authentication (Login, Registration)
-- CRUD operations for posts
-- Light/Dark mode support for the login page
-- Responsive design using Tailwind CSS
+- JWT-based authentication middleware 
+- Post creation, listing, and detail views 📝
+- Commenting system
+- Real-time updates with HTMX ⚡
+- Responsive design with Bootstrap 📱
+- TinyMCE advanced WYSIWYG HTML editor 🖋️
+- Database management with Hasura using GraphQL with PostgreSQL 🗄️
+- Containerization with Docker 🐳
+- Post creation, listing, and detail views via admin
+- Users creation, listing, and detail views via admin
+
+## Technologies Used
+- Backend: Go, PostgreSQL
+- Frontend: HTMX, Templ, Flowbite, TinyMCE WYSIWYG HTML editor
+- Containerization: Docker
 
 ## Requirements
 
@@ -27,83 +39,106 @@ A simple CMS (Content Management System) built with Go, GORM, and the Gin framew
 
 ## Installation
 
-1. Clone the repository:
+1. **Clone the repository:**
 
-   ```sh
+```sh
    git clone https://github.com/Hrishikesh-Panigrahi/GoCMS.git
    cd GoCMS
    ```
 
-2. Install dependencies:
+2. **Install dependencies:**
 
-   ```sh
+```sh
    go mod tidy
    ```
 
-3. Set up your database and update the database connection details in the `config` file.
-
-4. Run database migrations:
-
-   ```sh
-   go run main.go migrate
-   ```
+And you are all set
 
 ## Usage
 
-1. Run the application:
+1. **Run the application:**
 
-   ```sh
-   go run main.go
+```sh
+   air
    ```
 
-2. Open your browser and navigate to `http://localhost:8080`.
+2. **Open your browser and navigate to `http://localhost:8080`.**
+
+## Docker
+
+1. **Pull the Docker Image:**
+```sh
+docker pull hrishikeshpanigrahi025/my-go-app
+```
+
+2 . **Run the Docker container:**
+```sh
+docker run -p 8000:8000 hrishikeshpanigrahi025/my-go-app
+```
+
+3. **Open your browser and navigate to http://localhost:8000.**
 
 ## Project Structure
+The project structure follows a standard Go project layout:
 
 ```
-gocms/
-│
+GoCMS/
+├── connections/
 ├── controllers/
-│ ├── post_controller.go
-│ └── user_controller.go
-│
+├── middleware/
 ├── models/
-│ ├── post.go
-│ └── user.go
-│
-├── templates/
-│ ├── index.html
-│ └── login.html
-│
+├── render/
+├── routes/
+├── services/
 ├── static/
-│ ├── css/
-│ │ └── styles.css
-│ └── js/
-│ └── scripts.js
-│
+├── templates/
+├── Makefile
+├── Dockerfile
 ├── main.go
-├── go.mod
-└── go.sum
+└── go.mod
 ```
 
-## Routes
+- connections/: Database connections
+- controllers/: Handlers for the different routes
+- middleware/: Handling middleware   
+- models/: Database models
+- render/: Render template files and redirection
+- routes/: Route definitions
+- services/: Helper functions
+- static/: Static files (CSS, JS, images)
+- templates/: templ templates
+- Makefile: Makefile for automating tasks
+- Dockerfile: Docker configuration
+- main.go: Entry point of the application
+- go.mod: Go module file
 
-- `GET /` - Home page, list all posts
-- `GET /post/:id` - View a single post
-- `GET /login` - Login page
-- `POST /login` - Login action
-- `GET /register` - Registration page
-- `POST /register` - Registration action
-- `GET /post/new` - New post page
-- `POST /post` - Create a new post
-- `GET /post/edit/:id` - Edit post page
-- `POST /post/update/:id` - Update post action
-- `POST /post/delete/:id` - Delete post action
+## Run Locally
+To run the project locally, you have 3 options:
 
-## Contributing
+# Launch Debugger
+1. Open your project in Visual Studio Code.
+2. Set breakpoints as needed.
+3. Launch the debugger by pressing F5 or by selecting Run > Start Debugging from the menu.
 
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature-branch`).
-3. Make your changes and commit them (`git commit -m 'Add new feature'`).
-4. Push to the branch (`git push origin feature-branch`).
-5. Create a new Pull Request.
+# Run Air
+Ensure you have Air installed for live reloading.
+
+1. Start Air by running the following command in your terminal:
+```sh
+air
+```
+
+# Run go run main.go Command
+1. Open your terminal.
+
+2. Navigate to the project directory.
+
+3. Run the following command to start the application:
+```sh
+go run main.go
+```
+
+**Note:** Before running your project, make sure to generate the Templ files in the terminal to get the most updated UI. You can do this by running:
+```sh
+templ generate
+```
