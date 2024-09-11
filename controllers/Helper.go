@@ -4,12 +4,12 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
-	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
 	"github.com/gin-gonic/gin"
 	"github.com/gomarkdown/markdown"
 	"github.com/gomarkdown/markdown/html"
 	"github.com/gomarkdown/markdown/parser"
+	"gocms/connections"
+	"gocms/models"
 	"golang.org/x/crypto/bcrypt"
 )
 

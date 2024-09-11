@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"github.com/Hrishikesh-Panigrahi/GoCMS/controllers"
 	"github.com/gin-gonic/gin"
+	"gocms/controllers"
 )
 
 func authRoutes(superRoute *gin.RouterGroup) {

@@ -2,8 +2,8 @@ package views
 
 import (
 	"fmt"
-	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
-	views "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Posts"
+	"gocms/models"
+	views "gocms/templates/Posts"
 	"strconv"
 	"time"
 )
@@ -65,7 +65,7 @@ templ CreateUser() {
 									class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
 								>Username</label>
 								<input
-									type="number"
+									type="text"
 									name="Username"
 									id="Username"
 									class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#2563eb] focus:border-[#2563eb] block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#3b82f6] dark:focus:border-[#3b82f6]"

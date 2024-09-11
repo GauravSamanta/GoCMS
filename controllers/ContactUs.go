@@ -4,12 +4,12 @@ import (
 	"net/http"
 	"net/mail"
 
-	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
-	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
-	"github.com/Hrishikesh-Panigrahi/GoCMS/render"
-	views "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Contact"
-	Processedviews "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Processed"
 	"github.com/gin-gonic/gin"
+	"gocms/connections"
+	"gocms/models"
+	"gocms/render"
+	views "gocms/templates/Contact"
+	Processedviews "gocms/templates/Processed"
 )
 
 func ContactUs(c *gin.Context) {

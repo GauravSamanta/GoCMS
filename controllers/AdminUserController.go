@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
-	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
-	"github.com/Hrishikesh-Panigrahi/GoCMS/render"
-	view404 "github.com/Hrishikesh-Panigrahi/GoCMS/templates/404"
-	views "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Admin"
-	processedviews "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Processed"
 	"github.com/gin-gonic/gin"
+	"gocms/connections"
+	"gocms/models"
+	"gocms/render"
+	view404 "gocms/templates/404"
+	views "gocms/templates/Admin"
+	processedviews "gocms/templates/Processed"
 )
 
 func CreateUser(c *gin.Context) {
@@ -188,8 +188,8 @@ func GetUsers(c *gin.Context) {
 
 	userSearch := c.Query("user-search")
 
-	role:= c.Query("role")
-	lastUpdated:= c.Query("last_updated")
+	role := c.Query("role")
+	lastUpdated := c.Query("last_updated")
 
 	fmt.Println(role, lastUpdated)
 

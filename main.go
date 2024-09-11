@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 
-	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
-	"github.com/Hrishikesh-Panigrahi/GoCMS/controllers"
-	"github.com/Hrishikesh-Panigrahi/GoCMS/routes"
+	"gocms/connections"
+	"gocms/controllers"
+	"gocms/routes"
 
 	"github.com/gin-gonic/gin"
 )

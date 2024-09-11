@@ -1,11 +1,12 @@
 {
-    "trailingSlash": false,
-    "cleanUrls": true,
-    "rewrites": [
+    "routes": [
         {
-            "source": "/api(.*)",
-            "destination": "./main.go"
+            "src": "/(.*)",
+            "dest": "/api/index.go"
+        },
+        {
+            "src": "/static/.*",
+            "dest": "/static/.*"
         }
     ]
-
 }

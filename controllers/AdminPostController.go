@@ -5,11 +5,11 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
-	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
-	"github.com/Hrishikesh-Panigrahi/GoCMS/render"
-	view404 "github.com/Hrishikesh-Panigrahi/GoCMS/templates/404"
-	postview "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Admin"
+	"gocms/connections"
+	"gocms/models"
+	"gocms/render"
+	view404 "gocms/templates/404"
+	postview "gocms/templates/Admin"
 
 	"github.com/gin-gonic/gin"
 )

@@ -3,11 +3,11 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
-	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
-	"github.com/Hrishikesh-Panigrahi/GoCMS/render"
-	views "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Processed"
 	"github.com/gin-gonic/gin"
+	"gocms/connections"
+	"gocms/models"
+	"gocms/render"
+	views "gocms/templates/Processed"
 )
 
 func CreateComment(c *gin.Context) {

@@ -42,7 +42,7 @@ A simple CMS (Content Management System) built with Go, GORM, and the Gin framew
 1. **Clone the repository:**
 
 ```sh
-   git clone https://github.com/Hrishikesh-Panigrahi/GoCMS.git
+   git clone https://gocms.git
    cd GoCMS
    ```
 

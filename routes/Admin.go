@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"github.com/Hrishikesh-Panigrahi/GoCMS/controllers"
 	"github.com/gin-gonic/gin"
+	"gocms/controllers"
 )
 
 func adminRoutes(superRoute *gin.RouterGroup) {
@@ -24,7 +24,6 @@ func adminRoutes(superRoute *gin.RouterGroup) {
 			adminUserRouts.POST("/bulkdelete/", controllers.BulkDeleteUser)
 		}
 
-		
 	}
 
 	AdminFormRoutes := superRoute.Group("/admin")
@@ -37,7 +36,7 @@ func adminRoutes(superRoute *gin.RouterGroup) {
 			adminUserGETRouts.GET("/create", controllers.CreateUser)
 			adminUserGETRouts.GET("/update/:id", controllers.UpdateUser)
 			adminUserGETRouts.GET("/update-password/:id", controllers.UpdatePassword)
-		}	
+		}
 
 		adminPostGETRouts := AdminFormRoutes.Group("/post")
 		{
@@ -46,6 +45,6 @@ func adminRoutes(superRoute *gin.RouterGroup) {
 			adminPostGETRouts.GET("/create", controllers.AdminCreatePost)
 			adminPostGETRouts.GET("/update/:id", controllers.AdminUpdatePost)
 			adminPostGETRouts.GET("delete/:id", controllers.AdminDeletePost)
-		}	
+		}
 	}
 }

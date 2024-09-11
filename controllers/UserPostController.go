@@ -5,13 +5,13 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
-	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
-	"github.com/Hrishikesh-Panigrahi/GoCMS/render"
-	view404 "github.com/Hrishikesh-Panigrahi/GoCMS/templates/404"
-	postview "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Posts"
-	processedviews "github.com/Hrishikesh-Panigrahi/GoCMS/templates/Processed"
 	"github.com/gin-gonic/gin"
+	"gocms/connections"
+	"gocms/models"
+	"gocms/render"
+	view404 "gocms/templates/404"
+	postview "gocms/templates/Posts"
+	processedviews "gocms/templates/Processed"
 )
 
 func GetPosts(c *gin.Context) {

@@ -1,0 +1,19 @@
+services:
+  # define the frontend service
+  # we can use any name for the service. A standard naming convention is to use "web" for the frontend
+  full:
+     build: .
+     ports:
+      - 8080:8080
+     develop:
+      # we specify the files to watch for changes
+       watch:
+        # it'll watch for changes in package.json and package-lock.json and rebuild the container if there are any changes
+          - path: ./go.mod
+            action: rebuild
+          - path: ./go.sum
+            action: rebuild
+          # it'll watch for changes in the frontend directory and sync the changes with the container real time
+          - path: ./
+            target: /app
+            action: sync

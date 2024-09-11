@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
-	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
-	"github.com/Hrishikesh-Panigrahi/GoCMS/render"
-	"github.com/Hrishikesh-Panigrahi/GoCMS/services"
+	"gocms/connections"
+	"gocms/models"
+	"gocms/render"
+	"gocms/services"
 
-	authViews "github.com/Hrishikesh-Panigrahi/GoCMS/templates/authentication"
 	"github.com/gin-gonic/gin"
+	authViews "gocms/templates/authentication"
 )
 
 func Login(c *gin.Context) {
@@ -43,12 +43,12 @@ func Login(c *gin.Context) {
 
 		ValidatePassword(user.Password, body.Password, c)
 
-		url:=user.UserName+"/post"
+		url := user.UserName + "/post"
 
-		fmt.Printf("url: %s",url)
+		fmt.Printf("url: %s", url)
 		//set cookies and jwt token
 		services.JwtToken(c, user)
-	
+
 		render.Redirect(c, "/"+url, http.StatusFound)
 	}
 

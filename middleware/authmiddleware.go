@@ -7,10 +7,10 @@ import (
 	"os"
 	"time"
 
-	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
-	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
+	"gocms/connections"
+	"gocms/models"
 )
 
 func AuthMiddleware(c *gin.Context) {

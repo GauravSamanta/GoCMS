@@ -1,9 +1,9 @@
 package routes
 
 import (
-	"github.com/Hrishikesh-Panigrahi/GoCMS/controllers"
-	"github.com/Hrishikesh-Panigrahi/GoCMS/middleware"
 	"github.com/gin-gonic/gin"
+	"gocms/controllers"
+	"gocms/middleware"
 )
 
 func userRoutes(superRoute *gin.RouterGroup) {

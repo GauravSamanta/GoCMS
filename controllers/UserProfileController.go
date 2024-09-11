@@ -6,13 +6,13 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/Hrishikesh-Panigrahi/GoCMS/connections"
-	"github.com/Hrishikesh-Panigrahi/GoCMS/models"
-	"github.com/Hrishikesh-Panigrahi/GoCMS/render"
-	view404 "github.com/Hrishikesh-Panigrahi/GoCMS/templates/404"
-	views "github.com/Hrishikesh-Panigrahi/GoCMS/templates/User"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
+	"gocms/connections"
+	"gocms/models"
+	"gocms/render"
+	view404 "gocms/templates/404"
+	views "gocms/templates/User"
 )
 
 func GetProfile(c *gin.Context) {
